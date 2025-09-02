@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сложная форма</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            min-height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Десктопная боковая панель с шагами */
+        .steps-sidebar {
+            width: 300px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            color: white;
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .steps-list {
+            list-style: none;
+        }
+
+        .step-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 15px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .step-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .step-item.active {
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .step-number {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .step-item.active .step-number {
+            background: #4CAF50;
+        }
+
+        .step-title {
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        /* Основной контент */
+        .main-content {
+            flex: 1;
+            margin-left: 300px;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Мобильное меню-бургер */
+        .mobile-menu-toggle {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+            background: #667eea;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            cursor: pointer;
+            color: white;
+            font-size: 18px;
+        }
+
+        .mobile-menu-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 80%;
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            z-index: 1000;
+            padding: 80px 30px 30px;
+            transition: right 0.3s ease;
+        }
+
+        .mobile-menu-overlay.active {
+            right: 0;
+        }
+
+        /* Мобильные шаги сверху */
+        .mobile-steps {
+            display: none;
+            background: white;
+            padding: 20px 0;
+            border-bottom: 2px solid #eee;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .mobile-steps::-webkit-scrollbar {
+            display: none;
+        }
+
+        .mobile-steps-list {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+            padding: 0 20px;
+            min-width: max-content;
+        }
+
+        .mobile-step-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 80px;
+            cursor: pointer;
+        }
+
+        .mobile-step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #666;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-step-item.active .mobile-step-number {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .mobile-step-title {
+            font-size: 12px;
+            text-align: center;
+            color: #666;
+            line-height: 1.2;
+        }
+
+        .mobile-step-item.active .mobile-step-title {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+
+        /* Область контента формы */
+        .form-content {
+            flex: 1;
+            padding: 40px;
+            background: white;
+            margin: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-title {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .form-description {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .form-fields {
+            margin-bottom: 30px;
+        }
+
+        .field-group {
+            margin-bottom: 25px;
+        }
+
+        .field-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .field-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .field-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        /* Навигационные кнопки */
+        .navigation-buttons {
+            position: fixed;
+            bottom: 0;
+            left: 300px;
+            right: 0;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .nav-button {
+            padding: 15px 40px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-button.back {
+            background: #f0f0f0;
+            color: #666;
+        }
+
+        .nav-button.back:hover {
+            background: #e0e0e0;
+            transform: translateY(-2px);
+        }
+
+        .nav-button.next {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .nav-button.next:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Социальные сети (десктоп) */
+        .social-links {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #667eea;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 20px;
+        }
+
+        .social-link:hover {
+            transform: translateY(-3px) scale(1.1);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Социальные сети в мобильном меню */
+        .mobile-social {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .mobile-social h3 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .mobile-social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .mobile-social-link {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-social-link:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .steps-sidebar {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .mobile-steps {
+                display: block;
+            }
+
+            .form-content {
+                margin: 10px;
+                padding: 20px;
+            }
+
+            .form-title {
+                font-size: 24px;
+            }
+
+            .navigation-buttons {
+                left: 0;
+                gap: 10px;
+                padding: 15px;
+            }
+
+            .nav-button {
+                flex: 1;
+                padding: 15px 20px;
+            }
+
+            .social-links {
+                display: none;
+            }
+
+            .mobile-menu-overlay {
+                display: block;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .form-content {
+                margin: 5px;
+                padding: 15px;
+            }
+
+            .mobile-steps-list {
+                padding: 0 15px;
+            }
+
+            .navigation-buttons {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Боковая панель с шагами (десктоп) -->
+        <div class="steps-sidebar">
+            <ul class="steps-list">
+                <li class="step-item active">
+                    <div class="step-number">1</div>
+                    <div class="step-title">Личная информация</div>
+                </li>
+                <li class="step-item">
+                    <div class="step-number">2</div>
+                    <div class="step-title">Контактные данные</div>
+                </li>
+                <li class="step-item">
+                    <div class="step-number">3</div>
+                    <div class="step-title">Образование</div>
+                </li>
+                <li class="step-item">
+                    <div class="step-number">4</div>
+                    <div class="step-title">Опыт работы</div>
+                </li>
+                <li class="step-item">
+                    <div class="step-number">5</div>
+                    <div class="step-title">Дополнительно</div>
+                </li>
+                <li class="step-item">
+                    <div class="step-number">6</div>
+                    <div class="step-title">Подтверждение</div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Основной контент -->
+        <div class="main-content">
+            <!-- Мобильные шаги сверху -->
+            <div class="mobile-steps">
+                <ul class="mobile-steps-list">
+                    <li class="mobile-step-item active">
+                        <div class="mobile-step-number">1</div>
+                        <div class="mobile-step-title">Личная информация</div>
+                    </li>
+                    <li class="mobile-step-item">
+                        <div class="mobile-step-number">2</div>
+                        <div class="mobile-step-title">Контакты</div>
+                    </li>
+                    <li class="mobile-step-item">
+                        <div class="mobile-step-number">3</div>
+                        <div class="mobile-step-title">Образование</div>
+                    </li>
+                    <li class="mobile-step-item">
+                        <div class="mobile-step-number">4</div>
+                        <div class="mobile-step-title">Работа</div>
+                    </li>
+                    <li class="mobile-step-item">
+                        <div class="mobile-step-number">5</div>
+                        <div class="mobile-step-title">Дополнительно</div>
+                    </li>
+                    <li class="mobile-step-item">
+                        <div class="mobile-step-number">6</div>
+                        <div class="mobile-step-title">Подтверждение</div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Содержимое формы -->
+            <div class="form-content">
+                <h1 class="form-title">Личная информация</h1>
+                <p class="form-description">Пожалуйста, заполните свои личные данные для продолжения регистрации</p>
+
+                <div class="form-fields">
+                    <div class="field-group">
+                        <label class="field-label" for="firstName">Имя *</label>
+                        <input type="text" id="firstName" class="field-input" placeholder="Введите ваше имя">
+                    </div>
+
+                    <div class="field-group">
+                        <label class="field-label" for="lastName">Фамилия *</label>
+                        <input type="text" id="lastName" class="field-input" placeholder="Введите вашу фамилию">
+                    </div>
+
+                    <div class="field-group">
+                        <label class="field-label" for="email">Email *</label>
+                        <input type="email" id="email" class="field-input" placeholder="example@email.com">
+                    </div>
+
+                    <div class="field-group">
+                        <label class="field-label" for="phone">Телефон *</label>
+                        <input type="tel" id="phone" class="field-input" placeholder="+7 (999) 123-45-67">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Навигационные кнопки -->
+        <div class="navigation-buttons">
+            <button class="nav-button back">Назад</button>
+            <button class="nav-button next">Следующий шаг</button>
+        </div>
+
+        <!-- Социальные сети (десктоп) -->
+        <div class="social-links">
+            <a href="#" class="social-link" title="VK">В</a>
+            <a href="#" class="social-link" title="Telegram">Т</a>
+            <a href="#" class="social-link" title="Instagram">И</a>
+            <a href="#" class="social-link" title="WhatsApp">W</a>
+        </div>
+
+        <!-- Кнопка мобильного меню -->
+        <button class="mobile-menu-toggle">☰</button>
+
+        <!-- Мобильное выдвигающееся меню -->
+        <div class="mobile-menu-overlay">
+            <div class="mobile-social">
+                <h3>Социальные сети</h3>
+                <div class="mobile-social-links">
+                    <a href="#" class="mobile-social-link" title="VK">В</a>
+                    <a href="#" class="mobile-social-link" title="Telegram">Т</a>
+                    <a href="#" class="mobile-social-link" title="Instagram">И</a>
+                    <a href="#" class="mobile-social-link" title="WhatsApp">W</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Переключение мобильного меню
+        const menuToggle = document.querySelector('.mobile-menu-toggle');
+        const mobileMenu = document.querySelector('.mobile-menu-overlay');
+
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+            menuToggle.textContent = mobileMenu.classList.contains('active') ? '✕' : '☰';
+        });
+
+        // Закрытие меню при клике вне его
+        document.addEventListener('click', (e) => {
+            if (!mobileMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+                mobileMenu.classList.remove('active');
+                menuToggle.textContent = '☰';
+            }
+        });
+
+        // Клики по шагам (десктоп)
+        document.querySelectorAll('.step-item').forEach((item, index) => {
+            item.addEventListener('click', () => {
+                document.querySelectorAll('.step-item').forEach(step => step.classList.remove('active'));
+                item.classList.add('active');
+            });
+        });
+
+        // Клики по мобильным шагам
+        document.querySelectorAll('.mobile-step-item').forEach((item, index) => {
+            item.addEventListener('click', () => {
+                document.querySelectorAll('.mobile-step-item').forEach(step => step.classList.remove('active'));
+                item.classList.add('active');
+            });
+        });
+
+        // Навигационные кнопки
+        document.querySelector('.nav-button.next').addEventListener('click', () => {
+            console.log('Следующий шаг');
+        });
+
+        document.querySelector('.nav-button.back').addEventListener('click', () => {
+            console.log('Предыдущий шаг');
+        });
+    </script>
+</body>
+</html>
