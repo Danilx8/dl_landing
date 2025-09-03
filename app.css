@@ -1,0 +1,507 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: white;
+    min-height: 100vh;
+    display: flex;
+    flex: 1;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+    position: relative;
+    max-width: 1438px;
+    margin: auto;
+}
+
+/* Десктопная боковая панель с шагами */
+.steps-sidebar {
+    width: 300px;
+    padding: 40px 20px;
+    color: white;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    border-right: 1px #F3F4F6 solid;
+}
+
+.steps-list {
+    list-style: none;
+    position: relative;
+}
+
+/* Соединительная линия между шагами */
+.step-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 32px;
+    top: 58px;
+    width: 2px;
+    height: 45px;
+    background-color: #ccc;
+    z-index: 1;
+}
+
+.step-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 15px;
+    border-radius: 12px;
+    cursor: pointer;
+    position: relative;
+    z-index: 2;
+}
+
+.step-item:hover {
+    /*background: rgba(255, 255, 255, 0.1);*/
+}
+
+.step-item.active {
+    /*background: rgba(255, 255, 255, 0.2);*/
+}
+
+.step-number {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    border: 2px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    font-weight: bold;
+    font-size: 16px;
+    color: #ccc;
+    position: relative;
+    z-index: 3;
+    flex: none;
+}
+
+.step-item.active .step-number {
+    background: white;
+    border-color: #000;
+    color: #000;
+}
+
+.step-title {
+    font-size: 16px;
+    font-weight: 500;
+    color: #ccc;
+}
+
+.step-item.active .step-title {
+    color: #000;
+}
+
+/* Основной контент */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Мобильное меню-бургер */
+.mobile-menu-toggle {
+    display: none;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1001;
+    background: #667eea;
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: white;
+    font-size: 18px;
+}
+
+.mobile-menu-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 80%;
+    height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    z-index: 1000;
+    padding: 80px 30px 30px;
+    transition: right 0.3s ease;
+}
+
+.mobile-menu-overlay.active {
+    right: 0;
+}
+
+/* Мобильные шаги сверху */
+.mobile-steps {
+    display: none;
+    background: white;
+    padding: 20px 0;
+    border-bottom: 2px solid #eee;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    position: relative;
+}
+
+.mobile-steps::-webkit-scrollbar {
+    display: none;
+}
+
+/* Соединительные линии для мобильных шагов */
+.mobile-steps-list::before {
+    content: '';
+    position: absolute;
+    top: 40px;
+    left: 60px;
+    right: 60px;
+    height: 2px;
+    background-color: #ccc;
+    z-index: 1;
+}
+
+.mobile-steps-list {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+    padding: 0 20px;
+    min-width: max-content;
+}
+
+.mobile-step-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 80px;
+    cursor: pointer;
+    position: relative;
+    z-index: 2;
+}
+
+.mobile-step-number {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #e0e0e0;
+    border: 2px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #ccc;
+    transition: all 0.3s ease;
+}
+
+.mobile-step-item.active .mobile-step-number {
+    background: white;
+    border-color: #000;
+    color: #000;
+}
+
+.mobile-step-title {
+    font-size: 12px;
+    text-align: center;
+    color: #ccc;
+    line-height: 1.2;
+}
+
+.mobile-step-item.active .mobile-step-title {
+    color: #000;
+    font-weight: bold;
+}
+
+/* Область контента формы */
+.form-content {
+    flex: 1;
+    padding: 40px;
+    margin: 20px;
+    border-radius: 12px;
+}
+
+.input-container {
+    margin-bottom: 28px;
+}
+
+.input-title {
+    font-weight: 400;
+    font-size: 16px;
+    color: #757580;
+    margin-bottom: 14px;
+}
+
+.input-text {
+    font-family: 'Montserrat', sans-serif;
+    padding: 16px 20px;
+    font-weight: 400;
+    font-size: 16px;
+    color: #0F172A;
+    border: 2px #E7E7E9 solid;
+    border-radius: 16px;
+    width: 100%;
+    resize: none;
+}
+
+.emoji-container {
+    width: 32px;
+    height: 32px;
+    background-color: #EFDFF7;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+
+.form-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 30px;
+    flex-wrap: nowrap;
+}
+
+.form-title {
+    font-size: 22px;
+    color: #333;
+    font-weight: 600;
+    margin: 0;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.form-fields {
+    margin-bottom: 30px;
+}
+
+.theme-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.theme-block {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    padding: 11px 12px;
+    border: 1.5px solid #E7E7E9;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    min-width: fit-content;
+    white-space: nowrap;
+}
+
+.theme-block:hover {
+    background-color: #E7E7E9;
+}
+
+.theme-block + .active {
+    background-color: #E7E7E9;
+}
+
+
+/* Навигационные кнопки */
+.navigation-buttons {
+    position: absolute;
+    bottom: 0;
+    left: 300px;
+    right: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    border-radius: 40px 40px 0 0;
+    background-color: #F3F4F6;
+}
+
+.nav-button {
+    width: 280px;
+    height: 48px;
+    border: none;
+    border-radius: 16px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-button.back {
+    background: #f0f0f0;
+    border: 1.5px #CACAD3 solid;
+}
+
+.nav-button.back:hover {
+    background: #e0e0e0;
+}
+
+.nav-button.next {
+    background: black;
+    color: white;
+}
+
+.nav-button.next:hover {
+    background-color: #3D4352;
+}
+
+/* Социальные сети (десктоп) */
+.social-links {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.social-link:hover {
+    transform: translateY(-3px) scale(1.1);
+}
+
+/* Социальные сети в мобильном меню */
+.mobile-social {
+    margin-top: 40px;
+    padding-top: 30px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.mobile-social h3 {
+    color: white;
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+.mobile-social-links {
+    display: flex;
+    gap: 15px;
+}
+
+.mobile-social-link {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.social-icon {
+    width: 22px;
+    height: 22px;
+    margin: 6px;
+}
+
+.nav-icon {
+    width: 18px;
+    height: 18px;
+    margin: 0 8px;
+}
+
+.mobile-social-link:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .steps-sidebar {
+        display: none;
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+
+    .mobile-menu-toggle {
+        display: block;
+    }
+
+    .mobile-steps {
+        display: block;
+    }
+
+    .form-content {
+        margin: 10px;
+        padding: 20px;
+    }
+
+    .form-header {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        font-size: 16px;
+    }
+
+    .form-title {
+        font-size: 24px;
+        white-space: normal;
+    }
+
+    .input-title {
+        font-size: 13px;
+    }
+
+    .navigation-buttons {
+        left: 0;
+        gap: 10px;
+        padding: 15px;
+    }
+
+    .nav-button {
+        flex: 1;
+        padding: 15px 20px;
+    }
+
+    .social-links {
+        display: none;
+    }
+
+    .mobile-menu-overlay {
+        display: block;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-content {
+        margin: 5px;
+        padding: 15px;
+    }
+
+    .mobile-steps-list {
+        padding: 0 15px;
+    }
+
+    .navigation-buttons {
+        padding: 10px;
+    }
+}

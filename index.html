@@ -4,580 +4,231 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Сложная форма</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f5f5f5;
-            min-height: 100vh;
-        }
-
-        .container {
-            display: flex;
-            min-height: 100vh;
-            position: relative;
-        }
-
-        /* Десктопная боковая панель с шагами */
-        .steps-sidebar {
-            width: 300px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 40px 20px;
-            color: white;
-            position: fixed;
-            left: 0;
-            top: 0;
-            height: 100vh;
-            overflow-y: auto;
-        }
-
-        .steps-list {
-            list-style: none;
-        }
-
-        .step-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 30px;
-            padding: 15px;
-            border-radius: 12px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .step-item:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateX(5px);
-        }
-
-        .step-item.active {
-            background: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .step-number {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-            font-weight: bold;
-            font-size: 16px;
-        }
-
-        .step-item.active .step-number {
-            background: #4CAF50;
-        }
-
-        .step-title {
-            font-size: 16px;
-            font-weight: 500;
-        }
-
-        /* Основной контент */
-        .main-content {
-            flex: 1;
-            margin-left: 300px;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        /* Мобильное меню-бургер */
-        .mobile-menu-toggle {
-            display: none;
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1001;
-            background: #667eea;
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 8px;
-            cursor: pointer;
-            color: white;
-            font-size: 18px;
-        }
-
-        .mobile-menu-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            right: -100%;
-            width: 80%;
-            height: 100vh;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            z-index: 1000;
-            padding: 80px 30px 30px;
-            transition: right 0.3s ease;
-        }
-
-        .mobile-menu-overlay.active {
-            right: 0;
-        }
-
-        /* Мобильные шаги сверху */
-        .mobile-steps {
-            display: none;
-            background: white;
-            padding: 20px 0;
-            border-bottom: 2px solid #eee;
-            overflow-x: auto;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        }
-
-        .mobile-steps::-webkit-scrollbar {
-            display: none;
-        }
-
-        .mobile-steps-list {
-            display: flex;
-            list-style: none;
-            gap: 20px;
-            padding: 0 20px;
-            min-width: max-content;
-        }
-
-        .mobile-step-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-width: 80px;
-            cursor: pointer;
-        }
-
-        .mobile-step-number {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: #e0e0e0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: #666;
-            transition: all 0.3s ease;
-        }
-
-        .mobile-step-item.active .mobile-step-number {
-            background: #4CAF50;
-            color: white;
-        }
-
-        .mobile-step-title {
-            font-size: 12px;
-            text-align: center;
-            color: #666;
-            line-height: 1.2;
-        }
-
-        .mobile-step-item.active .mobile-step-title {
-            color: #4CAF50;
-            font-weight: bold;
-        }
-
-        /* Область контента формы */
-        .form-content {
-            flex: 1;
-            padding: 40px;
-            background: white;
-            margin: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .form-title {
-            font-size: 28px;
-            margin-bottom: 10px;
-            color: #333;
-            font-weight: 600;
-        }
-
-        .form-description {
-            color: #666;
-            margin-bottom: 30px;
-            font-size: 16px;
-            line-height: 1.6;
-        }
-
-        .form-fields {
-            margin-bottom: 30px;
-        }
-
-        .field-group {
-            margin-bottom: 25px;
-        }
-
-        .field-label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: #333;
-        }
-
-        .field-input {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: border-color 0.3s ease;
-        }
-
-        .field-input:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        /* Навигационные кнопки */
-        .navigation-buttons {
-            position: fixed;
-            bottom: 0;
-            left: 300px;
-            right: 0;
-            background: white;
-            padding: 20px;
-            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-
-        .nav-button {
-            padding: 15px 40px;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .nav-button.back {
-            background: #f0f0f0;
-            color: #666;
-        }
-
-        .nav-button.back:hover {
-            background: #e0e0e0;
-            transform: translateY(-2px);
-        }
-
-        .nav-button.next {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .nav-button.next:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(102, 126, 234, 0.4);
-        }
-
-        /* Социальные сети (десктоп) */
-        .social-links {
-            position: fixed;
-            bottom: 30px;
-            left: 30px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .social-link {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: #667eea;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            font-size: 20px;
-        }
-
-        .social-link:hover {
-            transform: translateY(-3px) scale(1.1);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
-        }
-
-        /* Социальные сети в мобильном меню */
-        .mobile-social {
-            margin-top: 40px;
-            padding-top: 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .mobile-social h3 {
-            color: white;
-            margin-bottom: 20px;
-            font-size: 18px;
-        }
-
-        .mobile-social-links {
-            display: flex;
-            gap: 15px;
-        }
-
-        .mobile-social-link {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .mobile-social-link:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: scale(1.1);
-        }
-
-        /* Адаптивность */
-        @media (max-width: 768px) {
-            .steps-sidebar {
-                display: none;
-            }
-
-            .main-content {
-                margin-left: 0;
-            }
-
-            .mobile-menu-toggle {
-                display: block;
-            }
-
-            .mobile-steps {
-                display: block;
-            }
-
-            .form-content {
-                margin: 10px;
-                padding: 20px;
-            }
-
-            .form-title {
-                font-size: 24px;
-            }
-
-            .navigation-buttons {
-                left: 0;
-                gap: 10px;
-                padding: 15px;
-            }
-
-            .nav-button {
-                flex: 1;
-                padding: 15px 20px;
-            }
-
-            .social-links {
-                display: none;
-            }
-
-            .mobile-menu-overlay {
-                display: block;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .form-content {
-                margin: 5px;
-                padding: 15px;
-            }
-
-            .mobile-steps-list {
-                padding: 0 15px;
-            }
-
-            .navigation-buttons {
-                padding: 10px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="app.css">
 </head>
 <body>
-    <div class="container">
-        <!-- Боковая панель с шагами (десктоп) -->
-        <div class="steps-sidebar">
-            <ul class="steps-list">
-                <li class="step-item active">
-                    <div class="step-number">1</div>
-                    <div class="step-title">Личная информация</div>
+<div class="container">
+    <!-- Боковая панель с шагами (десктоп) -->
+    <div class="steps-sidebar">
+        <ul class="steps-list">
+            <li class="step-item active">
+                <div class="step-number">1</div>
+                <div class="step-title">Укажи тему работы</div>
+            </li>
+            <li class="step-item">
+                <div class="step-number">2</div>
+                <div class="step-title">Согласуй цели и объёмы</div>
+            </li>
+            <li class="step-item">
+                <div class="step-number">3</div>
+                <div class="step-title">Проверь содержание</div>
+            </li>
+            <li class="step-item">
+                <div class="step-number">4</div>
+                <div class="step-title">Утверди источники</div>
+            </li>
+            <li class="step-item">
+                <div class="step-number">5</div>
+                <div class="step-title">Получи работу</div>
+            </li>
+            <li class="step-item">
+                <div class="step-number">6</div>
+                <div class="step-title">Подтверждение</div>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Основной контент -->
+    <div class="main-content">
+        <!-- Мобильные шаги сверху -->
+        <div class="mobile-steps">
+            <ul class="mobile-steps-list">
+                <li class="mobile-step-item active">
+                    <div class="mobile-step-number">1</div>
+                    <div class="mobile-step-title">Личная информация</div>
                 </li>
-                <li class="step-item">
-                    <div class="step-number">2</div>
-                    <div class="step-title">Контактные данные</div>
+                <li class="mobile-step-item">
+                    <div class="mobile-step-number">2</div>
+                    <div class="mobile-step-title">Контакты</div>
                 </li>
-                <li class="step-item">
-                    <div class="step-number">3</div>
-                    <div class="step-title">Образование</div>
+                <li class="mobile-step-item">
+                    <div class="mobile-step-number">3</div>
+                    <div class="mobile-step-title">Образование</div>
                 </li>
-                <li class="step-item">
-                    <div class="step-number">4</div>
-                    <div class="step-title">Опыт работы</div>
+                <li class="mobile-step-item">
+                    <div class="mobile-step-number">4</div>
+                    <div class="mobile-step-title">Работа</div>
                 </li>
-                <li class="step-item">
-                    <div class="step-number">5</div>
-                    <div class="step-title">Дополнительно</div>
+                <li class="mobile-step-item">
+                    <div class="mobile-step-number">5</div>
+                    <div class="mobile-step-title">Дополнительно</div>
                 </li>
-                <li class="step-item">
-                    <div class="step-number">6</div>
-                    <div class="step-title">Подтверждение</div>
+                <li class="mobile-step-item">
+                    <div class="mobile-step-number">6</div>
+                    <div class="mobile-step-title">Подтверждение</div>
                 </li>
             </ul>
         </div>
 
-        <!-- Основной контент -->
-        <div class="main-content">
-            <!-- Мобильные шаги сверху -->
-            <div class="mobile-steps">
-                <ul class="mobile-steps-list">
-                    <li class="mobile-step-item active">
-                        <div class="mobile-step-number">1</div>
-                        <div class="mobile-step-title">Личная информация</div>
-                    </li>
-                    <li class="mobile-step-item">
-                        <div class="mobile-step-number">2</div>
-                        <div class="mobile-step-title">Контакты</div>
-                    </li>
-                    <li class="mobile-step-item">
-                        <div class="mobile-step-number">3</div>
-                        <div class="mobile-step-title">Образование</div>
-                    </li>
-                    <li class="mobile-step-item">
-                        <div class="mobile-step-number">4</div>
-                        <div class="mobile-step-title">Работа</div>
-                    </li>
-                    <li class="mobile-step-item">
-                        <div class="mobile-step-number">5</div>
-                        <div class="mobile-step-title">Дополнительно</div>
-                    </li>
-                    <li class="mobile-step-item">
-                        <div class="mobile-step-number">6</div>
-                        <div class="mobile-step-title">Подтверждение</div>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Содержимое формы -->
-            <div class="form-content">
+        <!-- Содержимое формы -->
+        <div class="form-content">
+            <div class="form-header">
+                <div class="emoji-container">
+                    💬
+                </div>
                 <h1 class="form-title">Личная информация</h1>
-                <p class="form-description">Пожалуйста, заполните свои личные данные для продолжения регистрации</p>
-
-                <div class="form-fields">
-                    <div class="field-group">
-                        <label class="field-label" for="firstName">Имя *</label>
-                        <input type="text" id="firstName" class="field-input" placeholder="Введите ваше имя">
-                    </div>
-
-                    <div class="field-group">
-                        <label class="field-label" for="lastName">Фамилия *</label>
-                        <input type="text" id="lastName" class="field-input" placeholder="Введите вашу фамилию">
-                    </div>
-
-                    <div class="field-group">
-                        <label class="field-label" for="email">Email *</label>
-                        <input type="email" id="email" class="field-input" placeholder="example@email.com">
-                    </div>
-
-                    <div class="field-group">
-                        <label class="field-label" for="phone">Телефон *</label>
-                        <input type="tel" id="phone" class="field-input" placeholder="+7 (999) 123-45-67">
+            </div>
+            <div class="form-fields">
+                <div class="input-container">
+                    <h2 class="input-title">Выбери тип работы</h2>
+                    <div class="theme-grid" id="themeGrid">
+                        <div class="theme-block">
+                            <div class="theme-text">Курсовая работа</div>
+                        </div>
+                        <div class="theme-block">
+                            <div class="theme-text">Реферат</div>
+                        </div>
+                        <div class="theme-block">
+                            <div class="theme-text">Эссе</div>
+                        </div>
+                        <div class="theme-block">
+                            <div class="theme-text">Сочинение</div>
+                        </div>
+                        <div class="theme-block">
+                            <div class="theme-text">Дипломная работа</div>
+                        </div>
+                        <div class="theme-block">
+                            <div class="theme-text">Доклад</div>
+                        </div>
+                        <div class="theme-block">
+                            <div class="theme-text">Научная статья</div>
+                        </div>
+                        <div class="theme-block">
+                            <div class="theme-text">Отчет о практике</div>
+                        </div>
+                        <div class="theme-block">
+                            <div class="theme-text">Рецензия</div>
+                        </div>
+                        <div class="theme-block">
+                            <div class="theme-text">Научно-исследовательская работа</div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <!-- Навигационные кнопки -->
-        <div class="navigation-buttons">
-            <button class="nav-button back">Назад</button>
-            <button class="nav-button next">Следующий шаг</button>
-        </div>
-
-        <!-- Социальные сети (десктоп) -->
-        <div class="social-links">
-            <a href="#" class="social-link" title="VK">В</a>
-            <a href="#" class="social-link" title="Telegram">Т</a>
-            <a href="#" class="social-link" title="Instagram">И</a>
-            <a href="#" class="social-link" title="WhatsApp">W</a>
-        </div>
-
-        <!-- Кнопка мобильного меню -->
-        <button class="mobile-menu-toggle">☰</button>
-
-        <!-- Мобильное выдвигающееся меню -->
-        <div class="mobile-menu-overlay">
-            <div class="mobile-social">
-                <h3>Социальные сети</h3>
-                <div class="mobile-social-links">
-                    <a href="#" class="mobile-social-link" title="VK">В</a>
-                    <a href="#" class="mobile-social-link" title="Telegram">Т</a>
-                    <a href="#" class="mobile-social-link" title="Instagram">И</a>
-                    <a href="#" class="mobile-social-link" title="WhatsApp">W</a>
+                <div class="input-container">
+                    <h2 class="input-title">Введи тему</h2>
+                    <textarea class="input-text" name="Topic" cols="30" rows="10"
+                              placeholder="Криптография. Сквозное шифрование"></textarea>
                 </div>
             </div>
         </div>
     </div>
 
-    <script>
-        // Переключение мобильного меню
-        const menuToggle = document.querySelector('.mobile-menu-toggle');
-        const mobileMenu = document.querySelector('.mobile-menu-overlay');
+    <!-- Навигационные кнопки -->
+    <div class="navigation-buttons">
+        <button class="nav-button back">
+            <svg class="nav-icon" width="18" height="18" viewBox="0 0 18 18" fill="none"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path d="M14.25 9L3.75 9" stroke="#0F172A" stroke-width="1.5" stroke-linecap="round"
+                      stroke-linejoin="round"/>
+                <path d="M9 14.25L3.75 9L9 3.75" stroke="#0F172A" stroke-width="1.5" stroke-linecap="round"
+                      stroke-linejoin="round"/>
+            </svg>
+            Назад
+        </button>
+        <button class="nav-button next">Следующий шаг
+            <svg class="nav-icon" width="18" height="18" viewBox="0 0 18 18" fill="none"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path d="M3.75 9H14.25" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                      stroke-linejoin="round"/>
+                <path d="M9 3.75L14.25 9L9 14.25" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                      stroke-linejoin="round"/>
+            </svg>
+        </button>
+    </div>
 
-        menuToggle.addEventListener('click', () => {
-            mobileMenu.classList.toggle('active');
-            menuToggle.textContent = mobileMenu.classList.contains('active') ? '✕' : '☰';
-        });
+    <!-- Социальные сети (десктоп) -->
+    <div class="social-links">
+        <a href="#" class="social-link" title="Profile page">
+            <svg class="social-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                 viewBox="0 0 16 16">
+                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+            </svg>
+            Личный кабинет</a>
+        <a href="#" class="social-link" title="Telegram"><?xml version="1.0" encoding="utf-8"?>
+            <svg class="social-icon" width="800px" height="800px" viewBox="0 0 48 48" fill="none"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path d="M41.4193 7.30899C41.4193 7.30899 45.3046 5.79399 44.9808 9.47328C44.8729 10.9883 43.9016 16.2908 43.1461 22.0262L40.5559 39.0159C40.5559 39.0159 40.3401 41.5048 38.3974 41.9377C36.4547 42.3705 33.5408 40.4227 33.0011 39.9898C32.5694 39.6652 24.9068 34.7955 22.2086 32.4148C21.4531 31.7655 20.5897 30.4669 22.3165 28.9519L33.6487 18.1305C34.9438 16.8319 36.2389 13.8019 30.8426 17.4812L15.7331 27.7616C15.7331 27.7616 14.0063 28.8437 10.7686 27.8698L3.75342 25.7055C3.75342 25.7055 1.16321 24.0823 5.58815 22.459C16.3807 17.3729 29.6555 12.1786 41.4193 7.30899Z"
+                      fill="#000000"/>
+            </svg>
+            Поддержка 24/7</a>
+    </div>
 
-        // Закрытие меню при клике вне его
-        document.addEventListener('click', (e) => {
-            if (!mobileMenu.contains(e.target) && !menuToggle.contains(e.target)) {
-                mobileMenu.classList.remove('active');
-                menuToggle.textContent = '☰';
-            }
-        });
+    <!-- Кнопка мобильного меню -->
+    <button class="mobile-menu-toggle">☰</button>
 
-        // Клики по шагам (десктоп)
-        document.querySelectorAll('.step-item').forEach((item, index) => {
-            item.addEventListener('click', () => {
-                document.querySelectorAll('.step-item').forEach(step => step.classList.remove('active'));
-                item.classList.add('active');
-            });
-        });
+    <!-- Мобильное выдвигающееся меню -->
+    <div class="mobile-menu-overlay">
+        <div class="mobile-social">
+            <h3>Социальные сети</h3>
+            <div class="mobile-social-links">
+                <a href="#" class="mobile-social-link" title="VK">В</a>
+                <a href="#" class="mobile-social-link" title="Telegram">Т</a>
+                <a href="#" class="mobile-social-link" title="Instagram">И</a>
+                <a href="#" class="mobile-social-link" title="WhatsApp">W</a>
+            </div>
+        </div>
+    </div>
+</div>
 
-        // Клики по мобильным шагам
-        document.querySelectorAll('.mobile-step-item').forEach((item, index) => {
-            item.addEventListener('click', () => {
-                document.querySelectorAll('.mobile-step-item').forEach(step => step.classList.remove('active'));
-                item.classList.add('active');
-            });
-        });
+<script>
+    // Переключение мобильного меню
+    const menuToggle = document.querySelector('.mobile-menu-toggle');
+    const mobileMenu = document.querySelector('.mobile-menu-overlay');
 
-        // Навигационные кнопки
-        document.querySelector('.nav-button.next').addEventListener('click', () => {
-            console.log('Следующий шаг');
-        });
+    menuToggle.addEventListener('click', () => {
+        mobileMenu.classList.toggle('active');
+        menuToggle.textContent = mobileMenu.classList.contains('active') ? '✕' : '☰';
+    });
 
-        document.querySelector('.nav-button.back').addEventListener('click', () => {
-            console.log('Предыдущий шаг');
+    // Закрытие меню при клике вне его
+    document.addEventListener('click', (e) => {
+        if (!mobileMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+            mobileMenu.classList.remove('active');
+            menuToggle.textContent = '☰';
+        }
+    });
+
+    document.querySelectorAll('.theme-block').forEach((item, index) => {
+        item.addEventListener('click', () => {
+            document.querySelectorAll('.theme-block').forEach(block => block.classList.remove('active'));
+            item.classList.add('active');
+        })
+    })
+
+    // Клики по шагам (десктоп)
+    document.querySelectorAll('.step-item').forEach((item, index) => {
+        item.addEventListener('click', () => {
+            document.querySelectorAll('.step-item').forEach(step => step.classList.remove('active'));
+            item.classList.add('active');
         });
-    </script>
+    });
+
+    // Клики по мобильным шагам
+    document.querySelectorAll('.mobile-step-item').forEach((item, index) => {
+        item.addEventListener('click', () => {
+            document.querySelectorAll('.mobile-step-item').forEach(step => step.classList.remove('active'));
+            item.classList.add('active');
+        });
+    });
+
+    // Навигационные кнопки
+    document.querySelector('.nav-button.next').addEventListener('click', () => {
+        console.log('Следующий шаг');
+    });
+
+    document.querySelector('.nav-button.back').addEventListener('click', () => {
+        console.log('Предыдущий шаг');
+    });
+</script>
 </body>
 </html>
