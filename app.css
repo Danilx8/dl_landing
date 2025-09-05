@@ -475,15 +475,16 @@ button {
     border: 1.5px solid #E7E7E9;
     transition: all 0.3s ease;
     position: relative;
+    width: 100%;
 }
 
 .list-item:hover {
     background: #CACAD3;
 
     .item-text::after {
-    content: url("files/pencil.svg");
-    padding-left: 8px;
-}
+        content: url("files/pencil.svg");
+        padding-left: 8px;
+    }
 }
 
 .item-content {
@@ -566,6 +567,27 @@ button {
     font-size: 18px;
 }
 
+.popup {
+    position: fixed;
+    bottom: 132px;
+    width: 90%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    padding: 10px 20px;
+    border-radius: 12px;
+    border: 1px solid #E0E0E2;
+    z-index: 1000;
+}
+
+.confirm-button::before {
+    content: url("files/confirm.svg");
+}
+
+.cancel-button::before {
+    content: url("files/cross.svg");
+}
+
 /* Адаптивность */
 @media (max-width: 768px) {
     .logo {
@@ -636,6 +658,54 @@ button {
     .next {
         padding: 0;
         max-width: 70%;
+    }
+
+    .popup {
+        bottom: 168px;
+    }
+
+    .mobile-item-menu {
+        display: flex;
+        gap: 10px;
+        padding: 10px;
+        border-top: 1px solid #E0E0E2;
+        border-radius: 8px;
+        justify-content: flex-start;
+        position: fixed;
+        bottom: 78px;
+        width: 100%;
+    }
+
+    .control-button.edit-button {
+        /* Add styling for the edit button, e.g., icon or background */
+        background: url('files/pencil.svg') no-repeat center;
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+    }
+
+    .control-button.drag-button {
+        /* Ensure consistent styling for move button */
+        background: url('files/drag.svg') no-repeat center;
+        width: 40px;
+        height: 40px;
+        cursor: grab;
+    }
+
+    .control-button.delete-button {
+        /* Ensure consistent styling for delete button */
+        background: url('files/trash.svg') no-repeat center;
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+    }
+
+    .control-button.close-button {
+        background: url("files/cross.svg") no-repeat center;
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+        margin-left: auto;
     }
 }
 

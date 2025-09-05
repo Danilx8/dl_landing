@@ -219,13 +219,12 @@
     let items = [];
     let draggedElement = null;
     let draggedIndex = -1;
+    let lastDeletedItem = null;
+    let lastDeletedIndex = null;
+    let mobileMenuIndex = -1;
 
-    function updateNumbers() {
-        const itemElements = document.querySelectorAll('.list-item');
-        itemElements.forEach((item, index) => {
-            const numberElement = item.querySelector('.item-number');
-            numberElement.textContent = index + 1;
-        });
+    function isMobile() {
+        return window.innerWidth <= 768; // Adjust threshold as needed
     }
 
     function renderList() {
@@ -237,30 +236,34 @@
         }
 
         container.innerHTML = items.map((item, index) => `
-                <div class="list-item" data-index="${index}" draggable="false">
-                    <div class="item-content" onclick="editItem(${index})">
-                        <div class="item-number">${index + 1}</div>
-                        <div class="item-text" style="display: ${item.editing ? 'none' : 'block'}">${item.text || 'Пустой элемент'}</div>
-                        <input
-                            type="text"
-                            class="item-input"
-                            value="${item.text || ''}"
-                            placeholder="Введите текст..."
-                            style="display: ${item.editing ? 'block' : 'none'}"
-                            onblur="finishEditing(${index})"
-                            onkeypress="handleKeyPress(event, ${index})"
-                        />
-                        <div class="item-controls">
-                            <button class="control-button drag-button" onmousedown="startDrag(event, ${index})" title="Перетащить">
-                            </button>
-                            <button class="control-button delete-button" onclick="deleteItem(${index})" title="Удалить">
-                            </button>
-                        </div>
-                    </div>
+        <div class="list-item" data-index="${index}" draggable="false">
+            <div class="item-content">
+                <div class="item-number">${index + 1}</div>
+                <div class="item-text" style="display: ${item.editing ? 'none' : 'block'}" onclick="handleItemClick(${index})">${item.text || 'Пустой элемент'}</div>
+                <input
+                    type="text"
+                    class="item-input"
+                    value="${item.text || ''}"
+                    placeholder="Введите текст..."
+                    style="display: ${item.editing ? 'block' : 'none'}"
+                    onblur="finishEditing(${index})"
+                    onkeypress="handleKeyPress(event, ${index})"
+                />
+                <div class="item-controls" style="display: ${item.editing || isMobile() ? 'none' : 'block'}">
+                    <button class="control-button drag-button" onmousedown="startDrag(event, ${index})" title="Перетащить"></button>
+                    <button class="control-button delete-button" onclick="event.stopPropagation(); deleteItem(${index})" title="Удалить"></button>
                 </div>
-            `).join('');
+                ${item.editing ? `
+                    <div class="item-controls">
+                        <button class="control-button confirm-button" onclick="event.stopPropagation(); finishEditing(${index})" title="Подтвердить"></button>
+                        <button class="control-button cancel-button" onclick="event.stopPropagation(); cancelEditing(${index})" title="Отменить"></button>
+                    </div>
+                ` : ''}
+            </div>
+        </div>
+    `).join('');
 
-        // Auto-focus on newly added items
+        // Auto-focus on newly added or edited item
         const editingItems = items.map((item, index) => item.editing ? index : -1).filter(i => i !== -1);
         if (editingItems.length > 0) {
             setTimeout(() => {
@@ -268,14 +271,71 @@
                 if (input) input.focus();
             }, 100);
         }
+
+        // Render mobile menu if active
+        if (isMobile() && mobileMenuIndex !== -1) {
+            document.querySelectorAll('.mobile-item-menu').forEach(menu => menu.remove());
+            const navButtons = document.querySelector('.navigation-buttons');
+            const menu = document.createElement('div');
+            menu.className = 'mobile-item-menu';
+            menu.innerHTML = `
+            <button class="control-button edit-button" onclick="editItem(${mobileMenuIndex}); hideMobileMenu()" title="Редактировать"></button>
+            <button class="control-button drag-button" onmousedown="startDrag(event, ${mobileMenuIndex})" title="Перетащить"></button>
+            <button class="control-button delete-button" onclick="deleteItem(${mobileMenuIndex}); hideMobileMenu()" title="Удалить"></button>
+            <button class="control-button close-button" onclick="hideMobileMenu()" title="Скрыть"/>
+        `;
+            navButtons.parentNode.insertBefore(menu, navButtons);
+        }
+
+        // Render undo popup if an item was deleted
+        if (lastDeletedItem) {
+            document.querySelectorAll('.popup').forEach(popup => popup.remove());
+            const popup = document.createElement('div');
+            popup.className = 'popup';
+            popup.innerHTML = `Элемент удалён, нажми тут для отмены`;
+            popup.onclick = undoDelete;
+            document.body.appendChild(popup);
+            setTimeout(() => {
+                popup.remove();
+                lastDeletedItem = null;
+                lastDeletedIndex = null;
+            }, 5000);
+        }
+    }
+
+    function handleItemClick(index) {
+        if (isMobile()) {
+            mobileMenuIndex = index;
+            renderList();
+        } else {
+            editItem(index);
+        }
+    }
+
+    function hideMobileMenu() {
+        mobileMenuIndex = -1;
+        document.querySelectorAll('.mobile-item-menu').forEach(menu => menu.remove());
+        renderList();
     }
 
     function addNewItem() {
-        items.push({text: '', editing: true});
+        items = items.filter(item => !item.editing);
+        items.unshift({text: '', editing: true, originalText: ''});
+        document.querySelectorAll('.popup').forEach(popup => popup.remove());
+        const popup = document.createElement('div');
+        popup.className = 'popup';
+        popup.innerHTML = `Введите новый текст. После ввода сохраните данные.`;
+        document.body.appendChild(popup);
+        setTimeout(() => {
+            popup.remove();
+        }, 5000);
+        hideMobileMenu();
         renderList();
     }
 
     function editItem(index) {
+        items = items.filter(item => !item.editing);
+        items[index].originalText = items[index].text;
         items[index].editing = true;
         renderList();
     }
@@ -285,6 +345,8 @@
         if (input) {
             items[index].text = input.value;
             items[index].editing = false;
+            items[index].originalText = null;
+            hideMobileMenu();
             renderList();
         }
     }
@@ -295,19 +357,41 @@
         }
     }
 
+    function cancelEditing(index) {
+        if (items[index].originalText !== null) {
+            items[index].text = items[index].originalText;
+        }
+        items[index].editing = false;
+        items[index].originalText = null;
+        hideMobileMenu();
+        renderList();
+    }
+
     function deleteItem(index) {
         const itemElement = document.querySelector(`[data-index="${index}"]`);
         itemElement.classList.add('removing');
+        lastDeletedItem = items[index];
+        lastDeletedIndex = index;
 
         setTimeout(() => {
             items.splice(index, 1);
+            hideMobileMenu();
             renderList();
         }, 300);
     }
 
+    function undoDelete() {
+        if (lastDeletedItem && lastDeletedIndex !== null) {
+            items.splice(lastDeletedIndex, 0, lastDeletedItem);
+            lastDeletedItem = null;
+            lastDeletedIndex = null;
+            hideMobileMenu();
+            renderList();
+        }
+    }
+
     function startDrag(event, index) {
         event.preventDefault();
-
         const itemElement = document.querySelector(`[data-index="${index}"]`);
         draggedElement = itemElement;
         draggedIndex = index;
@@ -324,11 +408,9 @@
             draggedElement.style.zIndex = '1000';
             draggedElement.style.pointerEvents = 'none';
 
-            // Find drop target
             const elements = document.elementsFromPoint(e.clientX, e.clientY);
             const targetItem = elements.find(el => el.classList.contains('list-item') && !el.classList.contains('dragging'));
 
-            // Remove previous drag-over class
             document.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over'));
 
             if (targetItem) {
@@ -347,16 +429,13 @@
 
             if (targetItem) {
                 const targetIndex = parseInt(targetItem.dataset.index);
-
                 if (targetIndex !== draggedIndex) {
-                    // Move item
                     const draggedItem = items[draggedIndex];
                     items.splice(draggedIndex, 1);
                     items.splice(targetIndex, 0, draggedItem);
                 }
             }
 
-            // Reset styles
             draggedElement.style.position = '';
             draggedElement.style.left = '';
             draggedElement.style.top = '';
@@ -369,7 +448,7 @@
 
             draggedElement = null;
             draggedIndex = -1;
-
+            hideMobileMenu();
             renderList();
         }
 
@@ -379,6 +458,7 @@
 
     // Initialize
     renderList();
+
 </script>
 </body>
 </html>
