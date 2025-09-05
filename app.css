@@ -264,6 +264,10 @@ body {
     resize: none;
 }
 
+.input-text:hover {
+    border-color: #CACAD3;
+}
+
 .emoji-container {
     width: 32px;
     height: 32px;
@@ -392,7 +396,7 @@ body {
 }
 
 .social-link:hover {
-    transform: translateY(-3px) scale(1.1);
+    color: #3D4352;
 }
 
 /* Социальные сети в мобильном меню */
