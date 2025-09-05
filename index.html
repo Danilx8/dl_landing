@@ -172,6 +172,11 @@
                         </div>
                     </div>
                 </div>
+                <div class="input-container">
+                    <h2 class="input-title">Источники</h2>
+                    <div class="list-container" id="sourcesContainer">
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -221,6 +226,41 @@
 </div>
 
 <script>
+    let items = {
+        listContainer: [], topicsContainer: [], sourcesContainer: [
+            {authors: "Иванов И.И., Петров П.П.", title: "Основы криптографии", url: "https://example.com/crypto"},
+            {authors: "Сидоров С.С.", title: "Сквозное шифрование", url: "https://example.com/encryption"}
+        ]
+    };
+    let draggedElement = null;
+    let draggedIndex = -1;
+    let lastDeleted = {listContainer: null, topicsContainer: null, sourcesContainer: null};
+    let lastDeletedIndex = {listContainer: null, topicsContainer: null, sourcesContainer: null};
+    let mobileMenuIndex = -1;
+    let mobileMenuSubIndex = -1;
+
+    const sections = [
+        {name: 'Титульник', color: '#E7E7E9', size: 1},
+        {name: 'Содержание', color: '#D4FBE6', size: 1},
+        {name: 'Текст работы', color: '#EFDFF7', size: 10},
+        {name: 'Литература', color: '#D3FAF8', size: 1}
+    ];
+
+    function updateBar() {
+        const visualSizes = sections.map((sec, index) => index === 2 ? sec.size : sec.size * 3);
+        const total = visualSizes.reduce((sum, size) => sum + size, 0);
+        const bar = document.getElementById('volumeBar');
+        const labels = document.getElementById('volumeLabels');
+        bar.innerHTML = sections.map((sec, index) => `
+        <div class="section" style="width: ${(visualSizes[index] / total * 100).toFixed(2)}%; background-color: ${sec.color};">
+            <span class="section-size">${sec.size}</span>
+        </div>
+    `).join('');
+        labels.innerHTML = sections.map((sec, index) => `
+        <span class="section-label" style="flex: 0 0 ${(visualSizes[index] / total * 100).toFixed(2)}%;">${sec.name}</span>
+    `).join('');
+    }
+
     function isMobile() {
         return window.innerWidth <= 768;
     }
@@ -228,75 +268,113 @@
     function renderList(containerId) {
         const container = document.getElementById(containerId);
         const isTopics = containerId === 'topicsContainer';
+        const isSources = containerId === 'sourcesContainer';
         const itemList = items[containerId];
 
         if (itemList.length === 0) {
-            container.innerHTML = '<div class="empty-state">Список пуст. Нажмите кнопку выше, чтобы добавить первый элемент.</div>';
+            container.innerHTML = '<div class="empty-state">Список пуст.</div>';
             return;
         }
 
-        container.innerHTML = itemList.map((item, index) => `
-        <div class="${isTopics ? 'topic-item' : 'list-item'}" data-index="${index}" draggable="${isTopics ? 'false' : 'true'}">
-            <div class="item-content">
-                <div class="item-number">${index + 1}</div>
-                <div class="item-text" style="display: ${item.editing ? 'none' : 'flex'}" onclick="handleItemClick(${index}, '${containerId}')">${item.text || 'Пустой элемент'}</div>
-                <input
-                    type="text"
-                    class="item-input"
-                    value="${item.text || ''}"
-                    placeholder="Введите текст..."
-                    style="display: ${item.editing ? 'block' : 'none'}"
-                    onblur="finishEditing(${index}, '${containerId}')"
-                    onkeypress="handleKeyPress(event, ${index}, '${containerId}')"
-                />
-                <div class="item-controls" style="display: ${item.editing || isMobile() ? 'none' : 'flex'}">
-                    ${isTopics ? `
-                        <button class="control-button add-sub-button" onclick="event.stopPropagation(); addSubItem(${index}, '${containerId}')" title="Добавить подраздел"></button>
-                    ` : ''}
-                    ${!isTopics ? `
-                        <button class="control-button drag-button" onmousedown="startDrag(event, ${index}, '${containerId}')" title="Перетащить"></button>
-                    ` : ''}
-                    <button class="control-button delete-button" onclick="event.stopPropagation(); deleteItem(${index}, '${containerId}')" title="Удалить"></button>
+        container.innerHTML = itemList.map((item, index) => {
+            if (isSources) {
+                return `
+                <div class="source-item ${mobileMenuIndex === index && isMobile() ? 'active' : ''}" data-index="${index}" draggable="true">
+                    <div class="item-content">
+                        <div class="source-content">
+                            <div class="source-title-wrapper">
+                                <div class="source-title">${item.title}</div>
+                                ${item.url ? ` <a class="source-link" href="${item.url}"><img src="files/link.svg" alt="Ссылка на источник"></a> ` : ''}
+                            </div>
+                            <div class="source-authors" style="color: #757580">${item.authors}</div>
+                        </div>
+                        <div class="item-controls">
+                            <button class="control-button delete-button" onclick="event.stopPropagation(); deleteItem(${index}, '${containerId}')" title="Удалить"></button>
+                        </div>
+                        <div class="more-button" onclick="handleItemClick(${index}, '${containerId}')">
+                            <svg width="16" height="18" viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M8.00065 9.66634C8.36884 9.66634 8.66732 9.36786 8.66732 8.99967C8.66732 8.63148 8.36884 8.33301 8.00065 8.33301C7.63246 8.33301 7.33398 8.63148 7.33398 8.99967C7.33398 9.36786 7.63246 9.66634 8.00065 9.66634Z" fill="#757580" stroke="#757580" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M8.00065 5.00033C8.36884 5.00033 8.66732 4.70185 8.66732 4.33366C8.66732 3.96547 8.36884 3.66699 8.00065 3.66699C7.63246 3.66699 7.33398 3.96547 7.33398 4.33366C7.33398 4.70185 7.63246 5.00033 8.00065 5.00033Z" fill="#757580" stroke="#757580" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M8.00065 14.3333C8.36884 14.3333 8.66732 14.0349 8.66732 13.6667C8.66732 13.2985 8.36884 13 8.00065 13C7.63246 13 7.33398 13.2985 7.33398 13.6667C7.33398 14.0349 7.63246 14.3333 8.00065 14.3333Z" fill="#757580" stroke="#757580" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                    </div>
                 </div>
-                ${item.editing ? `
-                    <div class="item-controls">
-                        <button class="control-button confirm-button" onclick="event.stopPropagation(); finishEditing(${index}, '${containerId}')" title="Подтвердить"></button>
-                        <button class="control-button cancel-button" onclick="event.stopPropagation(); cancelEditing(${index}, '${containerId}')" title="Отменить"></button>
+            `;
+            }
+            return `
+            <div class="${isTopics ? 'topic-item' : 'list-item'} ${mobileMenuIndex === index && isMobile() ? 'active' : ''}" data-index="${index}" draggable="${isTopics ? 'false' : 'true'}">
+                <div class="item-content">
+                    <div class="item-number">${index + 1}</div>
+                    <div class="item-text" style="display: ${item.editing ? 'none' : 'flex'}" onclick="handleItemClick(${index}, '${containerId}')">${item.text || 'Пустой элемент'}</div>
+                    <input
+                        type="text"
+                        class="item-input"
+                        value="${item.text || ''}"
+                        placeholder="Введите текст..."
+                        style="display: ${item.editing ? 'block' : 'none'}"
+                        onblur="finishEditing(${index}, '${containerId}')"
+                        onkeypress="handleKeyPress(event, ${index}, '${containerId}')"
+                    />
+                    <div class="item-controls" style="display: ${item.editing ? 'none' : 'flex'}">
+                        ${isTopics ? `
+                            <button class="control-button add-sub-button" onclick="event.stopPropagation(); addSubItem(${index}, '${containerId}')" title="Добавить подраздел"></button>
+                        ` : ''}
+                        ${!isTopics ? `
+                            <button class="control-button drag-button" onmousedown="startDrag(event, ${index}, '${containerId}')" title="Перетащить"></button>
+                        ` : ''}
+                        <button class="control-button delete-button" onclick="event.stopPropagation(); deleteItem(${index}, '${containerId}')" title="Удалить"></button>
+                    </div>
+                    ${item.editing ? `
+                        <div class="item-controls">
+                            <button class="control-button confirm-button" onclick="event.stopPropagation(); finishEditing(${index}, '${containerId}')" title="Подтвердить"></button>
+                            <button class="control-button cancel-button" onclick="event.stopPropagation(); cancelEditing(${index}, '${containerId}')" title="Отменить"></button>
+                        </div>
+                    ` : ''}
+                    <div class="more-button" onclick="handleItemClick(${index}, '${containerId}')">
+                    <img src="files/menu.svg" alt="Меню">
+                    </div>
+                </div>
+                ${isTopics && item.subItems ? `
+                    <div class="sub-items">
+                        ${item.subItems.map((subItem, subIndex) => `
+                            <div class="sub-item ${mobileMenuSubIndex === subIndex && mobileMenuIndex === index && isMobile() ? 'active' : ''}" data-index="${index}" data-sub-index="${subIndex}">
+                                <div class="item-content">
+                                    <div class="item-number">${index + 1}.${subIndex + 1}</div>
+                                    <div class="item-text" style="display: ${subItem.editing ? 'none' : 'block'}" onclick="handleItemClick(${index}, '${containerId}', ${subIndex})">${subItem.text || 'Пустой подраздел'}</div>
+                                    <input
+                                        type="text"
+                                        class="item-input"
+                                        value="${subItem.text || ''}"
+                                        placeholder="Введите текст..."
+                                        style="display: ${subItem.editing ? 'block' : 'none'}"
+                                        onblur="finishEditing(${index}, '${containerId}', ${subIndex})"
+                                        onkeypress="handleKeyPress(event, ${index}, '${containerId}', ${subIndex})"
+                                    />
+                                    <div class="item-controls" style="display: ${subItem.editing ? 'none' : 'block'}">
+                                        <button class="control-button delete-button" onclick="event.stopPropagation(); deleteItem(${index}, '${containerId}', ${subIndex})" title="Удалить"></button>
+                                    </div>
+                                    ${subItem.editing ? `
+                                        <div class="item-controls">
+                                            <button class="control-button confirm-button" onclick="event.stopPropagation(); finishEditing(${index}, '${containerId}', ${subIndex})" title="Подтвердить"></button>
+                                            <button class="control-button cancel-button" onclick="event.stopPropagation(); cancelEditing(${index}, '${containerId}', ${subIndex})" title="Отменить"></button>
+                                        </div>
+                                    ` : ''}
+                                    <div class="more-button" onclick="handleItemClick(${index}, '${containerId}', ${subIndex})">
+                                        <svg width="16" height="18" viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M8.00065 9.66634C8.36884 9.66634 8.66732 9.36786 8.66732 8.99967C8.66732 8.63148 8.36884 8.33301 8.00065 8.33301C7.63246 8.33301 7.33398 8.63148 7.33398 8.99967C7.33398 9.36786 7.63246 9.66634 8.00065 9.66634Z" fill="#757580" stroke="#757580" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M8.00065 5.00033C8.36884 5.00033 8.66732 4.70185 8.66732 4.33366C8.66732 3.96547 8.36884 3.66699 8.00065 3.66699C7.63246 3.66699 7.33398 3.96547 7.33398 4.33366C7.33398 4.70185 7.63246 5.00033 8.00065 5.00033Z" fill="#757580" stroke="#757580" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M8.00065 14.3333C8.36884 14.3333 8.66732 14.0349 8.66732 13.6667C8.66732 13.2985 8.36884 13 8.00065 13C7.63246 13 7.33398 13.2985 7.33398 13.6667C7.33398 14.0349 7.63246 14.3333 8.00065 14.3333Z" fill="#757580" stroke="#757580" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('')}
                     </div>
                 ` : ''}
             </div>
-            ${isTopics && item.subItems ? `
-                <div class="sub-items">
-                    ${item.subItems.map((subItem, subIndex) => `
-                        <div class="sub-item" data-index="${index}" data-sub-index="${subIndex}">
-                            <div class="item-content">
-                                <div class="item-number">${index + 1}.${subIndex + 1}</div>
-                                <div class="item-text" style="display: ${subItem.editing ? 'none' : 'block'}" onclick="handleItemClick(${index}, '${containerId}', ${subIndex})">${subItem.text || 'Пустой подраздел'}</div>
-                                <input
-                                    type="text"
-                                    class="item-input"
-                                    value="${subItem.text || ''}"
-                                    placeholder="Введите текст..."
-                                    style="display: ${subItem.editing ? 'block' : 'none'}"
-                                    onblur="finishEditing(${index}, '${containerId}', ${subIndex})"
-                                    onkeypress="handleKeyPress(event, ${index}, '${containerId}', ${subIndex})"
-                                />
-                                <div class="item-controls" style="display: ${subItem.editing || isMobile() ? 'none' : 'block'}">
-                                    <button class="control-button delete-button" onclick="event.stopPropagation(); deleteItem(${index}, '${containerId}', ${subIndex})" title="Удалить"></button>
-                                </div>
-                                ${subItem.editing ? `
-                                    <div class="item-controls">
-                                        <button class="control-button confirm-button" onclick="event.stopPropagation(); finishEditing(${index}, '${containerId}', ${subIndex})" title="Подтвердить"></button>
-                                        <button class="control-button cancel-button" onclick="event.stopPropagation(); cancelEditing(${index}, '${containerId}', ${subIndex})" title="Отменить"></button>
-                                    </div>
-                                ` : ''}
-                            </div>
-                        </div>
-                    `).join('')}
-                </div>
-            ` : ''}
-        </div>
-    `).join('');
+        `;
+        }).join('');
 
         const editingItems = itemList.map((item, index) => item.editing ? index : -1).filter(i => i !== -1);
         if (editingItems.length > 0) {
@@ -320,20 +398,24 @@
             });
         }
 
-        if (isMobile() && (mobileMenuIndex !== -1 || mobileMenuSubIndex !== -1)) {
+        if (isMobile() && mobileMenuIndex !== -1) {
             document.querySelectorAll('.mobile-item-menu').forEach(menu => menu.remove());
             const navButtons = document.querySelector('.navigation-buttons');
             const menu = document.createElement('div');
             menu.className = 'mobile-item-menu';
-            if (mobileMenuSubIndex !== -1) {
-                // Sub-item menu
+            if (isSources) {
+                menu.innerHTML = `
+                <button class="control-button link-button" onclick="window.open('${itemList[mobileMenuIndex].url}', '_blank'); hideMobileMenu()" title="Перейти по ссылке"></button>
+                <button class="control-button delete-button" onclick="deleteItem(${mobileMenuIndex}, '${containerId}'); hideMobileMenu()" title="Удалить"></button>
+                <button class="control-button close-button" onclick="hideMobileMenu()" title="Скрыть"></button>
+            `;
+            } else if (mobileMenuSubIndex !== -1) {
                 menu.innerHTML = `
                 <button class="control-button edit-button" onclick="editItem(${mobileMenuIndex}, '${containerId}', ${mobileMenuSubIndex}); hideMobileMenu()" title="Редактировать"></button>
                 <button class="control-button delete-button" onclick="deleteItem(${mobileMenuIndex}, '${containerId}', ${mobileMenuSubIndex}); hideMobileMenu()" title="Удалить"></button>
                 <button class="control-button close-button" onclick="hideMobileMenu()" title="Скрыть"></button>
             `;
             } else {
-                // Top-level item menu
                 menu.innerHTML = `
                 <button class="control-button edit-button" onclick="editItem(${mobileMenuIndex}, '${containerId}'); hideMobileMenu()" title="Редактировать"></button>
                 ${isTopics ? `
@@ -362,7 +444,21 @@
                 lastDeletedIndex[containerId] = null;
             }, 5000);
         }
+
+        if (isSources && !isMobile()) {
+            document.querySelectorAll('.source-item').forEach(item => {
+                item.addEventListener('mouseenter', () => {
+                    const linkButton = item.querySelector('.link-button');
+                    if (linkButton) linkButton.style.display = 'flex';
+                });
+                item.addEventListener('mouseleave', () => {
+                    const linkButton = item.querySelector('.link-button');
+                    if (linkButton) linkButton.style.display = 'none';
+                });
+            });
+        }
     }
+
 
     function handleItemClick(index, containerId, subIndex = null) {
         if (isMobile()) {
@@ -370,7 +466,11 @@
             mobileMenuSubIndex = subIndex !== null ? subIndex : -1;
             renderList(containerId);
         } else {
-            editItem(index, containerId, subIndex);
+            if (containerId === 'sourcesContainer') {
+                window.open(items[containerId][index].url, '_blank');
+            } else {
+                editItem(index, containerId, subIndex);
+            }
         }
     }
 
@@ -380,6 +480,7 @@
         document.querySelectorAll('.mobile-item-menu').forEach(menu => menu.remove());
         renderList('listContainer');
         renderList('topicsContainer');
+        renderList('sourcesContainer');
     }
 
     function addNewItem(containerId) {
@@ -610,38 +711,7 @@
         console.log('Предыдущий шаг');
     });
 
-    // List and Topics management
-    let items = {listContainer: [], topicsContainer: []};
-    let draggedElement = null;
-    let draggedIndex = -1;
-    let lastDeleted = {listContainer: null, topicsContainer: null};
-    let lastDeletedIndex = {listContainer: null, topicsContainer: null};
-    let mobileMenuIndex = -1;
-    let mobileMenuSubIndex = -1;
-
-    // Volume component
-    const sections = [
-        {name: 'Титульник', color: '#E7E7E9', size: 1},
-        {name: 'Содержание', color: '#D4FBE6', size: 1},
-        {name: 'Текст работы', color: '#EFDFF7', size: 10},
-        {name: 'Литература', color: '#D3FAF8', size: 1}
-    ];
-
-    function updateBar() {
-        const visualSizes = sections.map((sec, index) => index === 2 ? sec.size : sec.size * 3);
-        const total = visualSizes.reduce((sum, size) => sum + size, 0);
-        const bar = document.getElementById('volumeBar');
-        const labels = document.getElementById('volumeLabels');
-        bar.innerHTML = sections.map((sec, index) => `
-            <div class="section" style="width: ${(visualSizes[index] / total * 100).toFixed(2)}%; background-color: ${sec.color};">
-                <span class="section-size">${sec.size}</span>
-            </div>
-        `).join('');
-        labels.innerHTML = sections.map((sec, index) => `
-            <span class="section-label" style="flex: 0 0 ${(visualSizes[index] / total * 100).toFixed(2)}%;">${sec.name}</span>
-        `).join('');
-    }
-
+    // Volume component event listeners
     const textInput = document.getElementById('textPages');
     textInput.addEventListener('input', () => {
         let value = parseInt(textInput.value);
@@ -664,6 +734,7 @@
     // Initialize
     renderList('listContainer');
     renderList('topicsContainer');
+    renderList('sourcesContainer');
     updateBar();
 </script>
 </body>

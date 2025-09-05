@@ -139,7 +139,6 @@ button {
     background: grey;
     z-index: 1000;
     padding: 80px 30px 30px;
-    transition: right 0.3s ease;
 }
 
 .mobile-menu-overlay.active {
@@ -205,7 +204,6 @@ button {
     margin-bottom: 8px;
     font-weight: bold;
     color: #ccc;
-    transition: all 0.3s ease;
 }
 
 .mobile-step-item.active .mobile-step-number {
@@ -455,14 +453,10 @@ button {
     border-radius: 16px;
     margin-bottom: 12px;
     border: 1.5px solid #E7E7E9;
-    transition: all 0.3s ease;
     position: relative;
     width: 100%;
 }
 
-.list-item:hover {
-    background: #CACAD3;
-}
 
 .list-item:hover .item-text::after {
     content: url("files/pencil.svg");
@@ -478,12 +472,15 @@ button {
 
 .item-content:hover {
     background-color: #F3F4F6;
-    border-radius: 16px 16px 0 0;
-}
 
-.item-text:after {
-    content: url("files/pencil.svg");
-    padding-left: 8px;
+    .item-text::after {
+        content: url("files/pencil.svg");
+        padding-left: 8px;
+    }
+
+    .item-controls {
+        display: flex;
+    }
 }
 
 .topic-item {
@@ -495,7 +492,6 @@ button {
 .sub-item {
     background: #E7E7E9;
     border: 1.5px solid #E7E7E9;
-    transition: all 0.3s ease;
     position: relative;
     width: 100%;
 }
@@ -550,7 +546,7 @@ button {
 }
 
 .item-controls {
-    display: flex;
+    display: none;
     gap: 8px;
     align-items: center;
 }
@@ -627,7 +623,7 @@ button {
     display: flex;
     height: 40px;
     width: 100%;
-    border-radius: 4px;
+    border-radius: 12px;
     overflow: hidden;
     border: 1px solid #ccc;
 }
@@ -640,7 +636,6 @@ button {
     color: #333;
     font-size: 14px;
     font-weight: bold;
-    transition: width 0.3s ease;
 }
 
 .section-size {
@@ -715,6 +710,47 @@ button {
 
 .volume-input input[type=number] {
     -moz-appearance: textfield;
+}
+
+.source-item {
+    border: 1.5px solid #E7E7E9;
+    border-radius: 16px;
+    margin-bottom: 12px;
+}
+
+.source-title-wrapper {
+    display: flex;
+    gap: 8px;
+}
+
+.source-content {
+    flex: 1;
+}
+
+.source-item:hover {
+    .source-link {
+        display: block;
+    }
+}
+
+.source-title {
+    color: #0F172A;
+}
+
+.source-link {
+    display: none;
+}
+
+.source-authors {
+    color: #757580;
+}
+
+.source-item.active {
+    background: #F3F4F6;
+}
+
+.more-button {
+    display: none;
 }
 
 @media (max-width: 1080px) {
@@ -827,6 +863,7 @@ button {
         gap: 10px;
         padding: 10px;
         border-top: 1px solid #E0E0E2;
+        background: white;
         border-radius: 8px;
         justify-content: flex-start;
         position: fixed;
@@ -868,6 +905,27 @@ button {
         width: 40px;
         height: 40px;
         cursor: pointer;
+    }
+
+    .control-button.link-button {
+        background: url("files/link.svg") no-repeat center;
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+    }
+
+    .item-controls {
+        display: flex;
+    }
+
+    .more-button {
+        display: block;
+    }
+
+    .source-item:hover {
+        .source-link {
+            display: none;
+        }
     }
 }
 
