@@ -210,60 +210,61 @@
         <!-- Кнопка мобильного меню -->
         <button class="mobile-menu-toggle">☰</button>
     </div>
+</div>
 
-    <script>
-        document.querySelectorAll('.theme-block').forEach((item, index) => {
-            item.addEventListener('click', () => {
-                document.querySelectorAll('.theme-block').forEach(block => block.classList.remove('active'));
-                item.classList.add('active');
-            })
+<script>
+    document.querySelectorAll('.theme-block').forEach((item, index) => {
+        item.addEventListener('click', () => {
+            document.querySelectorAll('.theme-block').forEach(block => block.classList.remove('active'));
+            item.classList.add('active');
         })
+    })
 
-        // Клики по шагам (десктоп)
-        document.querySelectorAll('.step-item').forEach((item, index) => {
-            item.addEventListener('click', () => {
-                document.querySelectorAll('.step-item').forEach(step => step.classList.remove('active'));
-                item.classList.add('active');
-            });
+    // Клики по шагам (десктоп)
+    document.querySelectorAll('.step-item').forEach((item, index) => {
+        item.addEventListener('click', () => {
+            document.querySelectorAll('.step-item').forEach(step => step.classList.remove('active'));
+            item.classList.add('active');
         });
+    });
 
-        // Клики по мобильным шагам
-        document.querySelectorAll('.mobile-step-item').forEach((item, index) => {
-            item.addEventListener('click', () => {
-                document.querySelectorAll('.mobile-step-item').forEach(step => step.classList.remove('active'));
-                item.classList.add('active');
-            });
+    // Клики по мобильным шагам
+    document.querySelectorAll('.mobile-step-item').forEach((item, index) => {
+        item.addEventListener('click', () => {
+            document.querySelectorAll('.mobile-step-item').forEach(step => step.classList.remove('active'));
+            item.classList.add('active');
         });
+    });
 
-        // Навигационные кнопки
-        document.querySelector('.nav-button.next').addEventListener('click', () => {
-            console.log('Следующий шаг');
-        });
+    // Навигационные кнопки
+    document.querySelector('.nav-button.next').addEventListener('click', () => {
+        console.log('Следующий шаг');
+    });
 
-        document.querySelector('.nav-button.back').addEventListener('click', () => {
-            console.log('Предыдущий шаг');
-        });
+    document.querySelector('.nav-button.back').addEventListener('click', () => {
+        console.log('Предыдущий шаг');
+    });
 
-        let items = [];
-        let draggedElement = null;
-        let draggedIndex = -1;
-        let lastDeletedItem = null;
-        let lastDeletedIndex = null;
-        let mobileMenuIndex = -1;
+    let items = [];
+    let draggedElement = null;
+    let draggedIndex = -1;
+    let lastDeletedItem = null;
+    let lastDeletedIndex = null;
+    let mobileMenuIndex = -1;
 
-        function isMobile() {
-            return window.innerWidth <= 768; // Adjust threshold as needed
+    function isMobile() {
+        return window.innerWidth <= 768; // Adjust threshold as needed
+    }
+
+    function renderList() {
+        const container = document.getElementById('listContainer');
+
+        if (items.length === 0) {
+            container.innerHTML = '<div class="empty-state">Список пуст. Нажмите кнопку выше, чтобы добавить первый элемент.</div>';
+            return;
         }
 
-        function renderList() {
-            const container = document.getElementById('listContainer');
-
-            if (items.length === 0) {
-                container.innerHTML = '<div class="empty-state">Список пуст. Нажмите кнопку выше, чтобы добавить первый элемент.</div>';
-                return;
-            }
-
-            container.innerHTML = items.map((item, index) => `
+        container.innerHTML = items.map((item, index) => `
         <div class="list-item" data-index="${index}" draggable="false">
             <div class="item-content">
                 <div class="item-number">${index + 1}</div>
@@ -291,246 +292,246 @@
         </div>
     `).join('');
 
-            // Auto-focus on newly added or edited item
-            const editingItems = items.map((item, index) => item.editing ? index : -1).filter(i => i !== -1);
-            if (editingItems.length > 0) {
-                setTimeout(() => {
-                    const input = container.querySelector(`[data-index="${editingItems[0]}"] .item-input`);
-                    if (input) input.focus();
-                }, 100);
-            }
+        // Auto-focus on newly added or edited item
+        const editingItems = items.map((item, index) => item.editing ? index : -1).filter(i => i !== -1);
+        if (editingItems.length > 0) {
+            setTimeout(() => {
+                const input = container.querySelector(`[data-index="${editingItems[0]}"] .item-input`);
+                if (input) input.focus();
+            }, 100);
+        }
 
-            // Render mobile menu if active
-            if (isMobile() && mobileMenuIndex !== -1) {
-                document.querySelectorAll('.mobile-item-menu').forEach(menu => menu.remove());
-                const navButtons = document.querySelector('.navigation-buttons');
-                const menu = document.createElement('div');
-                menu.className = 'mobile-item-menu';
-                menu.innerHTML = `
+        // Render mobile menu if active
+        if (isMobile() && mobileMenuIndex !== -1) {
+            document.querySelectorAll('.mobile-item-menu').forEach(menu => menu.remove());
+            const navButtons = document.querySelector('.navigation-buttons');
+            const menu = document.createElement('div');
+            menu.className = 'mobile-item-menu';
+            menu.innerHTML = `
             <button class="control-button edit-button" onclick="editItem(${mobileMenuIndex}); hideMobileMenu()" title="Редактировать"></button>
             <button class="control-button drag-button" onmousedown="startDrag(event, ${mobileMenuIndex})" title="Перетащить"></button>
             <button class="control-button delete-button" onclick="deleteItem(${mobileMenuIndex}); hideMobileMenu()" title="Удалить"></button>
             <button class="control-button close-button" onclick="hideMobileMenu()" title="Скрыть"/>
         `;
-                navButtons.parentNode.insertBefore(menu, navButtons);
-            }
-
-            // Render undo popup if an item was deleted
-            if (lastDeletedItem) {
-                document.querySelectorAll('.popup').forEach(popup => popup.remove());
-                const popup = document.createElement('div');
-                popup.className = 'popup';
-                popup.innerHTML = `Элемент удалён, нажми тут для отмены`;
-                popup.onclick = undoDelete;
-                document.body.appendChild(popup);
-                setTimeout(() => {
-                    popup.remove();
-                    lastDeletedItem = null;
-                    lastDeletedIndex = null;
-                }, 5000);
-            }
+            navButtons.parentNode.insertBefore(menu, navButtons);
         }
 
-        function handleItemClick(index) {
-            if (isMobile()) {
-                mobileMenuIndex = index;
-                renderList();
-            } else {
-                editItem(index);
-            }
-        }
-
-        function hideMobileMenu() {
-            mobileMenuIndex = -1;
-            document.querySelectorAll('.mobile-item-menu').forEach(menu => menu.remove());
-            renderList();
-        }
-
-        function addNewItem() {
-            items = items.filter(item => !item.editing);
-            items.unshift({text: '', editing: true, originalText: ''});
+        // Render undo popup if an item was deleted
+        if (lastDeletedItem) {
             document.querySelectorAll('.popup').forEach(popup => popup.remove());
             const popup = document.createElement('div');
             popup.className = 'popup';
-            popup.innerHTML = `Введите новый текст. После ввода сохраните данные.`;
+            popup.innerHTML = `Элемент удалён, нажми тут для отмены`;
+            popup.onclick = undoDelete;
             document.body.appendChild(popup);
             setTimeout(() => {
                 popup.remove();
+                lastDeletedItem = null;
+                lastDeletedIndex = null;
             }, 5000);
-            hideMobileMenu();
+        }
+    }
+
+    function handleItemClick(index) {
+        if (isMobile()) {
+            mobileMenuIndex = index;
             renderList();
+        } else {
+            editItem(index);
         }
+    }
 
-        function editItem(index) {
-            items = items.filter(item => !item.editing);
-            items[index].originalText = items[index].text;
-            items[index].editing = true;
-            renderList();
-        }
+    function hideMobileMenu() {
+        mobileMenuIndex = -1;
+        document.querySelectorAll('.mobile-item-menu').forEach(menu => menu.remove());
+        renderList();
+    }
 
-        function finishEditing(index) {
-            const input = document.querySelector(`[data-index="${index}"] .item-input`);
-            if (input) {
-                items[index].text = input.value;
-                items[index].editing = false;
-                items[index].originalText = null;
-                hideMobileMenu();
-                renderList();
-            }
-        }
+    function addNewItem() {
+        items = items.filter(item => !item.editing);
+        items.unshift({text: '', editing: true, originalText: ''});
+        document.querySelectorAll('.popup').forEach(popup => popup.remove());
+        const popup = document.createElement('div');
+        popup.className = 'popup';
+        popup.innerHTML = `Введите новый текст. После ввода сохраните данные.`;
+        document.body.appendChild(popup);
+        setTimeout(() => {
+            popup.remove();
+        }, 5000);
+        hideMobileMenu();
+        renderList();
+    }
 
-        function handleKeyPress(event, index) {
-            if (event.key === 'Enter') {
-                finishEditing(index);
-            }
-        }
+    function editItem(index) {
+        items = items.filter(item => !item.editing);
+        items[index].originalText = items[index].text;
+        items[index].editing = true;
+        renderList();
+    }
 
-        function cancelEditing(index) {
-            if (items[index].originalText !== null) {
-                items[index].text = items[index].originalText;
-            }
+    function finishEditing(index) {
+        const input = document.querySelector(`[data-index="${index}"] .item-input`);
+        if (input) {
+            items[index].text = input.value;
             items[index].editing = false;
             items[index].originalText = null;
             hideMobileMenu();
             renderList();
         }
+    }
 
-        function deleteItem(index) {
-            const itemElement = document.querySelector(`[data-index="${index}"]`);
-            itemElement.classList.add('removing');
-            lastDeletedItem = items[index];
-            lastDeletedIndex = index;
-
-            setTimeout(() => {
-                items.splice(index, 1);
-                hideMobileMenu();
-                renderList();
-            }, 300);
+    function handleKeyPress(event, index) {
+        if (event.key === 'Enter') {
+            finishEditing(index);
         }
+    }
 
-        function undoDelete() {
-            if (lastDeletedItem && lastDeletedIndex !== null) {
-                items.splice(lastDeletedIndex, 0, lastDeletedItem);
-                lastDeletedItem = null;
-                lastDeletedIndex = null;
-                hideMobileMenu();
-                renderList();
+    function cancelEditing(index) {
+        if (items[index].originalText !== null) {
+            items[index].text = items[index].originalText;
+        }
+        items[index].editing = false;
+        items[index].originalText = null;
+        hideMobileMenu();
+        renderList();
+    }
+
+    function deleteItem(index) {
+        const itemElement = document.querySelector(`[data-index="${index}"]`);
+        itemElement.classList.add('removing');
+        lastDeletedItem = items[index];
+        lastDeletedIndex = index;
+
+        setTimeout(() => {
+            items.splice(index, 1);
+            hideMobileMenu();
+            renderList();
+        }, 300);
+    }
+
+    function undoDelete() {
+        if (lastDeletedItem && lastDeletedIndex !== null) {
+            items.splice(lastDeletedIndex, 0, lastDeletedItem);
+            lastDeletedItem = null;
+            lastDeletedIndex = null;
+            hideMobileMenu();
+            renderList();
+        }
+    }
+
+    function startDrag(event, index) {
+        event.preventDefault();
+        const itemElement = document.querySelector(`[data-index="${index}"]`);
+        draggedElement = itemElement;
+        draggedIndex = index;
+
+        itemElement.style.cursor = 'grabbing';
+
+        function onMouseMove(e) {
+            if (!draggedElement) return;
+
+            draggedElement.classList.add('dragging');
+            draggedElement.style.position = 'fixed';
+            draggedElement.style.left = e.clientX - draggedElement.offsetWidth / 2 + 'px';
+            draggedElement.style.top = e.clientY - 20 + 'px';
+            draggedElement.style.zIndex = '1000';
+            draggedElement.style.pointerEvents = 'none';
+
+            const elements = document.elementsFromPoint(e.clientX, e.clientY);
+            const targetItem = elements.find(el => el.classList.contains('list-item') && !el.classList.contains('dragging'));
+
+            document.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over'));
+
+            if (targetItem) {
+                targetItem.classList.add('drag-over');
             }
         }
 
-        function startDrag(event, index) {
-            event.preventDefault();
-            const itemElement = document.querySelector(`[data-index="${index}"]`);
-            draggedElement = itemElement;
-            draggedIndex = index;
+        function onMouseUp(e) {
+            document.removeEventListener('mousemove', onMouseMove);
+            document.removeEventListener('mouseup', onMouseUp);
 
-            itemElement.style.cursor = 'grabbing';
+            if (!draggedElement) return;
 
-            function onMouseMove(e) {
-                if (!draggedElement) return;
+            const elements = document.elementsFromPoint(e.clientX, e.clientY);
+            const targetItem = elements.find(el => el.classList.contains('list-item') && !el.classList.contains('dragging'));
 
-                draggedElement.classList.add('dragging');
-                draggedElement.style.position = 'fixed';
-                draggedElement.style.left = e.clientX - draggedElement.offsetWidth / 2 + 'px';
-                draggedElement.style.top = e.clientY - 20 + 'px';
-                draggedElement.style.zIndex = '1000';
-                draggedElement.style.pointerEvents = 'none';
-
-                const elements = document.elementsFromPoint(e.clientX, e.clientY);
-                const targetItem = elements.find(el => el.classList.contains('list-item') && !el.classList.contains('dragging'));
-
-                document.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over'));
-
-                if (targetItem) {
-                    targetItem.classList.add('drag-over');
+            if (targetItem) {
+                const targetIndex = parseInt(targetItem.dataset.index);
+                if (targetIndex !== draggedIndex) {
+                    const draggedItem = items[draggedIndex];
+                    items.splice(draggedIndex, 1);
+                    items.splice(targetIndex, 0, draggedItem);
                 }
             }
 
-            function onMouseUp(e) {
-                document.removeEventListener('mousemove', onMouseMove);
-                document.removeEventListener('mouseup', onMouseUp);
+            draggedElement.style.position = '';
+            draggedElement.style.left = '';
+            draggedElement.style.top = '';
+            draggedElement.style.zIndex = '';
+            draggedElement.style.pointerEvents = '';
+            draggedElement.style.cursor = '';
+            draggedElement.classList.remove('dragging');
 
-                if (!draggedElement) return;
+            document.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over'));
 
-                const elements = document.elementsFromPoint(e.clientX, e.clientY);
-                const targetItem = elements.find(el => el.classList.contains('list-item') && !el.classList.contains('dragging'));
-
-                if (targetItem) {
-                    const targetIndex = parseInt(targetItem.dataset.index);
-                    if (targetIndex !== draggedIndex) {
-                        const draggedItem = items[draggedIndex];
-                        items.splice(draggedIndex, 1);
-                        items.splice(targetIndex, 0, draggedItem);
-                    }
-                }
-
-                draggedElement.style.position = '';
-                draggedElement.style.left = '';
-                draggedElement.style.top = '';
-                draggedElement.style.zIndex = '';
-                draggedElement.style.pointerEvents = '';
-                draggedElement.style.cursor = '';
-                draggedElement.classList.remove('dragging');
-
-                document.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over'));
-
-                draggedElement = null;
-                draggedIndex = -1;
-                hideMobileMenu();
-                renderList();
-            }
-
-            document.addEventListener('mousemove', onMouseMove);
-            document.addEventListener('mouseup', onMouseUp);
+            draggedElement = null;
+            draggedIndex = -1;
+            hideMobileMenu();
+            renderList();
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const sections = [
-                {name: 'Титульник', color: '#E7E7E9', size: 1},
-                {name: 'Содержание', color: '#D4FBE6', size: 1},
-                {name: 'Текст работы', color: '#EFDFF7', size: 10},
-                {name: 'Литература', color: '#D3FAF8', size: 1}
-            ];
+        document.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('mouseup', onMouseUp);
+    }
 
-            function updateBar() {
-                const visualSizes = sections.map((sec, index) => index === 2 ? sec.size : sec.size * 3);
-                const total = visualSizes.reduce((sum, size) => sum + size, 0);
-                const bar = document.getElementById('volumeBar');
-                const labels = document.getElementById('volumeLabels');
-                bar.innerHTML = sections.map((sec, index) => `
+    document.addEventListener('DOMContentLoaded', () => {
+        const sections = [
+            {name: 'Титульник', color: '#E7E7E9', size: 1},
+            {name: 'Содержание', color: '#D4FBE6', size: 1},
+            {name: 'Текст работы', color: '#EFDFF7', size: 10},
+            {name: 'Литература', color: '#D3FAF8', size: 1}
+        ];
+
+        function updateBar() {
+            const visualSizes = sections.map((sec, index) => index === 2 ? sec.size : sec.size * 3);
+            const total = visualSizes.reduce((sum, size) => sum + size, 0);
+            const bar = document.getElementById('volumeBar');
+            const labels = document.getElementById('volumeLabels');
+            bar.innerHTML = sections.map((sec, index) => `
             <div class="section" style="width: ${(visualSizes[index] / total * 100).toFixed(2)}%; background-color: ${sec.color};">
                 <span class="section-size">${sec.size}</span>
             </div>
         `).join('');
-                labels.innerHTML = sections.map((sec, index) => `
+            labels.innerHTML = sections.map((sec, index) => `
             <span class="section-label" style="flex: 0 0 ${(visualSizes[index] / total * 100).toFixed(2)}%;">${sec.name}</span>
         `).join('');
-            }
+        }
 
-            const textInput = document.getElementById('textPages');
-            textInput.addEventListener('input', () => {
-                let value = parseInt(textInput.value);
-                if (isNaN(value) || value < 1) value = 1;
-                sections[2].size = value;
-                textInput.value = value;
-                updateBar();
-            });
-
-            document.getElementById('decrement').addEventListener('click', () => {
-                textInput.value = Math.max(1, parseInt(textInput.value) - 1);
-                textInput.dispatchEvent(new Event('input'));
-            });
-
-            document.getElementById('increment').addEventListener('click', () => {
-                textInput.value = parseInt(textInput.value) + 1;
-                textInput.dispatchEvent(new Event('input'));
-            });
-
+        const textInput = document.getElementById('textPages');
+        textInput.addEventListener('input', () => {
+            let value = parseInt(textInput.value);
+            if (isNaN(value) || value < 1) value = 1;
+            sections[2].size = value;
+            textInput.value = value;
             updateBar();
         });
 
-        // Initialize
-        renderList();
-    </script>
+        document.getElementById('decrement').addEventListener('click', () => {
+            textInput.value = Math.max(1, parseInt(textInput.value) - 1);
+            textInput.dispatchEvent(new Event('input'));
+        });
+
+        document.getElementById('increment').addEventListener('click', () => {
+            textInput.value = parseInt(textInput.value) + 1;
+            textInput.dispatchEvent(new Event('input'));
+        });
+
+        updateBar();
+    });
+
+    // Initialize
+    renderList();
+</script>
 </body>
 </html>
