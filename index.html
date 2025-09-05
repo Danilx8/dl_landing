@@ -134,108 +134,136 @@
                 </div>
                 <div class="input-container">
                     <h2 class="input-title">Объём работы</h2>
+                    <div class="volume-block">
+                        <div class="volume-input">
+                            <button id="decrement">-</button>
+                            <input type="number" id="textPages" value="10" min="1">
+                            <button id="increment">+</button>
+                        </div>
+                        <div class="volume-component">
+                            <div class="volume-bar" id="volumeBar">
+                                <div class="section" style="width: 15.79%; background-color: #E7E7E9;">
+                                    <span class="section-size">1</span>
+                                </div>
+                                <div class="section" style="width: 15.79%; background-color: #D4FBE6;">
+                                    <span class="section-size">1</span>
+                                </div>
+                                <div class="section" style="width: 52.63%; background-color: #EFDFF7;">
+                                    <span class="section-size">10</span>
+                                </div>
+                                <div class="section" style="width: 15.79%; background-color: #D3FAF8;">
+                                    <span class="section-size">1</span>
+                                </div>
+                            </div>
+                            <div class="volume-labels" id="volumeLabels">
+                                <span class="section-label">Титульник</span>
+                                <span class="section-label">Содержание</span>
+                                <span class="section-label">Текст работы</span>
+                                <span class="section-label">Литература</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <!-- Навигационные кнопки -->
+        <div class="navigation-buttons">
+            <button class="nav-button back">
+                <svg class="nav-icon" width="18" height="18" viewBox="0 0 18 18" fill="none"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path d="M14.25 9L3.75 9" stroke="#0F172A" stroke-width="1.5" stroke-linecap="round"
+                          stroke-linejoin="round"/>
+                    <path d="M9 14.25L3.75 9L9 3.75" stroke="#0F172A" stroke-width="1.5" stroke-linecap="round"
+                          stroke-linejoin="round"/>
+                </svg>
+                Назад
+            </button>
+            <button class="nav-button next">Следующий шаг
+                <svg class="nav-icon" width="18" height="18" viewBox="0 0 18 18" fill="none"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3.75 9H14.25" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                          stroke-linejoin="round"/>
+                    <path d="M9 3.75L14.25 9L9 14.25" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                          stroke-linejoin="round"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Социальные сети (десктоп) -->
+        <div class="social-links">
+            <a href="#" class="social-link" title="Profile page">
+                <svg class="social-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                     viewBox="0 0 16 16">
+                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+                </svg>
+                Личный кабинет</a>
+            <a href="#" class="social-link" title="Telegram"><?xml version="1.0" encoding="utf-8"?>
+                <svg class="social-icon" width="800px" height="800px" viewBox="0 0 48 48" fill="none"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path d="M41.4193 7.30899C41.4193 7.30899 45.3046 5.79399 44.9808 9.47328C44.8729 10.9883 43.9016 16.2908 43.1461 22.0262L40.5559 39.0159C40.5559 39.0159 40.3401 41.5048 38.3974 41.9377C36.4547 42.3705 33.5408 40.4227 33.0011 39.9898C32.5694 39.6652 24.9068 34.7955 22.2086 32.4148C21.4531 31.7655 20.5897 30.4669 22.3165 28.9519L33.6487 18.1305C34.9438 16.8319 36.2389 13.8019 30.8426 17.4812L15.7331 27.7616C15.7331 27.7616 14.0063 28.8437 10.7686 27.8698L3.75342 25.7055C3.75342 25.7055 1.16321 24.0823 5.58815 22.459C16.3807 17.3729 29.6555 12.1786 41.4193 7.30899Z"
+                          fill="#000000"/>
+                </svg>
+                Поддержка 24/7</a>
+        </div>
+
+        <!-- Кнопка мобильного меню -->
+        <button class="mobile-menu-toggle">☰</button>
     </div>
 
-    <!-- Навигационные кнопки -->
-    <div class="navigation-buttons">
-        <button class="nav-button back">
-            <svg class="nav-icon" width="18" height="18" viewBox="0 0 18 18" fill="none"
-                 xmlns="http://www.w3.org/2000/svg">
-                <path d="M14.25 9L3.75 9" stroke="#0F172A" stroke-width="1.5" stroke-linecap="round"
-                      stroke-linejoin="round"/>
-                <path d="M9 14.25L3.75 9L9 3.75" stroke="#0F172A" stroke-width="1.5" stroke-linecap="round"
-                      stroke-linejoin="round"/>
-            </svg>
-            Назад
-        </button>
-        <button class="nav-button next">Следующий шаг
-            <svg class="nav-icon" width="18" height="18" viewBox="0 0 18 18" fill="none"
-                 xmlns="http://www.w3.org/2000/svg">
-                <path d="M3.75 9H14.25" stroke="white" stroke-width="1.5" stroke-linecap="round"
-                      stroke-linejoin="round"/>
-                <path d="M9 3.75L14.25 9L9 14.25" stroke="white" stroke-width="1.5" stroke-linecap="round"
-                      stroke-linejoin="round"/>
-            </svg>
-        </button>
-    </div>
-
-    <!-- Социальные сети (десктоп) -->
-    <div class="social-links">
-        <a href="#" class="social-link" title="Profile page">
-            <svg class="social-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                 viewBox="0 0 16 16">
-                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
-            </svg>
-            Личный кабинет</a>
-        <a href="#" class="social-link" title="Telegram"><?xml version="1.0" encoding="utf-8"?>
-            <svg class="social-icon" width="800px" height="800px" viewBox="0 0 48 48" fill="none"
-                 xmlns="http://www.w3.org/2000/svg">
-                <path d="M41.4193 7.30899C41.4193 7.30899 45.3046 5.79399 44.9808 9.47328C44.8729 10.9883 43.9016 16.2908 43.1461 22.0262L40.5559 39.0159C40.5559 39.0159 40.3401 41.5048 38.3974 41.9377C36.4547 42.3705 33.5408 40.4227 33.0011 39.9898C32.5694 39.6652 24.9068 34.7955 22.2086 32.4148C21.4531 31.7655 20.5897 30.4669 22.3165 28.9519L33.6487 18.1305C34.9438 16.8319 36.2389 13.8019 30.8426 17.4812L15.7331 27.7616C15.7331 27.7616 14.0063 28.8437 10.7686 27.8698L3.75342 25.7055C3.75342 25.7055 1.16321 24.0823 5.58815 22.459C16.3807 17.3729 29.6555 12.1786 41.4193 7.30899Z"
-                      fill="#000000"/>
-            </svg>
-            Поддержка 24/7</a>
-    </div>
-
-    <!-- Кнопка мобильного меню -->
-    <button class="mobile-menu-toggle">☰</button>
-</div>
-
-<script>
-    document.querySelectorAll('.theme-block').forEach((item, index) => {
-        item.addEventListener('click', () => {
-            document.querySelectorAll('.theme-block').forEach(block => block.classList.remove('active'));
-            item.classList.add('active');
+    <script>
+        document.querySelectorAll('.theme-block').forEach((item, index) => {
+            item.addEventListener('click', () => {
+                document.querySelectorAll('.theme-block').forEach(block => block.classList.remove('active'));
+                item.classList.add('active');
+            })
         })
-    })
 
-    // Клики по шагам (десктоп)
-    document.querySelectorAll('.step-item').forEach((item, index) => {
-        item.addEventListener('click', () => {
-            document.querySelectorAll('.step-item').forEach(step => step.classList.remove('active'));
-            item.classList.add('active');
+        // Клики по шагам (десктоп)
+        document.querySelectorAll('.step-item').forEach((item, index) => {
+            item.addEventListener('click', () => {
+                document.querySelectorAll('.step-item').forEach(step => step.classList.remove('active'));
+                item.classList.add('active');
+            });
         });
-    });
 
-    // Клики по мобильным шагам
-    document.querySelectorAll('.mobile-step-item').forEach((item, index) => {
-        item.addEventListener('click', () => {
-            document.querySelectorAll('.mobile-step-item').forEach(step => step.classList.remove('active'));
-            item.classList.add('active');
+        // Клики по мобильным шагам
+        document.querySelectorAll('.mobile-step-item').forEach((item, index) => {
+            item.addEventListener('click', () => {
+                document.querySelectorAll('.mobile-step-item').forEach(step => step.classList.remove('active'));
+                item.classList.add('active');
+            });
         });
-    });
 
-    // Навигационные кнопки
-    document.querySelector('.nav-button.next').addEventListener('click', () => {
-        console.log('Следующий шаг');
-    });
+        // Навигационные кнопки
+        document.querySelector('.nav-button.next').addEventListener('click', () => {
+            console.log('Следующий шаг');
+        });
 
-    document.querySelector('.nav-button.back').addEventListener('click', () => {
-        console.log('Предыдущий шаг');
-    });
+        document.querySelector('.nav-button.back').addEventListener('click', () => {
+            console.log('Предыдущий шаг');
+        });
 
-    let items = [];
-    let draggedElement = null;
-    let draggedIndex = -1;
-    let lastDeletedItem = null;
-    let lastDeletedIndex = null;
-    let mobileMenuIndex = -1;
+        let items = [];
+        let draggedElement = null;
+        let draggedIndex = -1;
+        let lastDeletedItem = null;
+        let lastDeletedIndex = null;
+        let mobileMenuIndex = -1;
 
-    function isMobile() {
-        return window.innerWidth <= 768; // Adjust threshold as needed
-    }
-
-    function renderList() {
-        const container = document.getElementById('listContainer');
-
-        if (items.length === 0) {
-            container.innerHTML = '<div class="empty-state">Список пуст. Нажмите кнопку выше, чтобы добавить первый элемент.</div>';
-            return;
+        function isMobile() {
+            return window.innerWidth <= 768; // Adjust threshold as needed
         }
 
-        container.innerHTML = items.map((item, index) => `
+        function renderList() {
+            const container = document.getElementById('listContainer');
+
+            if (items.length === 0) {
+                container.innerHTML = '<div class="empty-state">Список пуст. Нажмите кнопку выше, чтобы добавить первый элемент.</div>';
+                return;
+            }
+
+            container.innerHTML = items.map((item, index) => `
         <div class="list-item" data-index="${index}" draggable="false">
             <div class="item-content">
                 <div class="item-number">${index + 1}</div>
@@ -263,202 +291,246 @@
         </div>
     `).join('');
 
-        // Auto-focus on newly added or edited item
-        const editingItems = items.map((item, index) => item.editing ? index : -1).filter(i => i !== -1);
-        if (editingItems.length > 0) {
-            setTimeout(() => {
-                const input = container.querySelector(`[data-index="${editingItems[0]}"] .item-input`);
-                if (input) input.focus();
-            }, 100);
-        }
+            // Auto-focus on newly added or edited item
+            const editingItems = items.map((item, index) => item.editing ? index : -1).filter(i => i !== -1);
+            if (editingItems.length > 0) {
+                setTimeout(() => {
+                    const input = container.querySelector(`[data-index="${editingItems[0]}"] .item-input`);
+                    if (input) input.focus();
+                }, 100);
+            }
 
-        // Render mobile menu if active
-        if (isMobile() && mobileMenuIndex !== -1) {
-            document.querySelectorAll('.mobile-item-menu').forEach(menu => menu.remove());
-            const navButtons = document.querySelector('.navigation-buttons');
-            const menu = document.createElement('div');
-            menu.className = 'mobile-item-menu';
-            menu.innerHTML = `
+            // Render mobile menu if active
+            if (isMobile() && mobileMenuIndex !== -1) {
+                document.querySelectorAll('.mobile-item-menu').forEach(menu => menu.remove());
+                const navButtons = document.querySelector('.navigation-buttons');
+                const menu = document.createElement('div');
+                menu.className = 'mobile-item-menu';
+                menu.innerHTML = `
             <button class="control-button edit-button" onclick="editItem(${mobileMenuIndex}); hideMobileMenu()" title="Редактировать"></button>
             <button class="control-button drag-button" onmousedown="startDrag(event, ${mobileMenuIndex})" title="Перетащить"></button>
             <button class="control-button delete-button" onclick="deleteItem(${mobileMenuIndex}); hideMobileMenu()" title="Удалить"></button>
             <button class="control-button close-button" onclick="hideMobileMenu()" title="Скрыть"/>
         `;
-            navButtons.parentNode.insertBefore(menu, navButtons);
+                navButtons.parentNode.insertBefore(menu, navButtons);
+            }
+
+            // Render undo popup if an item was deleted
+            if (lastDeletedItem) {
+                document.querySelectorAll('.popup').forEach(popup => popup.remove());
+                const popup = document.createElement('div');
+                popup.className = 'popup';
+                popup.innerHTML = `Элемент удалён, нажми тут для отмены`;
+                popup.onclick = undoDelete;
+                document.body.appendChild(popup);
+                setTimeout(() => {
+                    popup.remove();
+                    lastDeletedItem = null;
+                    lastDeletedIndex = null;
+                }, 5000);
+            }
         }
 
-        // Render undo popup if an item was deleted
-        if (lastDeletedItem) {
+        function handleItemClick(index) {
+            if (isMobile()) {
+                mobileMenuIndex = index;
+                renderList();
+            } else {
+                editItem(index);
+            }
+        }
+
+        function hideMobileMenu() {
+            mobileMenuIndex = -1;
+            document.querySelectorAll('.mobile-item-menu').forEach(menu => menu.remove());
+            renderList();
+        }
+
+        function addNewItem() {
+            items = items.filter(item => !item.editing);
+            items.unshift({text: '', editing: true, originalText: ''});
             document.querySelectorAll('.popup').forEach(popup => popup.remove());
             const popup = document.createElement('div');
             popup.className = 'popup';
-            popup.innerHTML = `Элемент удалён, нажми тут для отмены`;
-            popup.onclick = undoDelete;
+            popup.innerHTML = `Введите новый текст. После ввода сохраните данные.`;
             document.body.appendChild(popup);
             setTimeout(() => {
                 popup.remove();
-                lastDeletedItem = null;
-                lastDeletedIndex = null;
             }, 5000);
-        }
-    }
-
-    function handleItemClick(index) {
-        if (isMobile()) {
-            mobileMenuIndex = index;
+            hideMobileMenu();
             renderList();
-        } else {
-            editItem(index);
         }
-    }
 
-    function hideMobileMenu() {
-        mobileMenuIndex = -1;
-        document.querySelectorAll('.mobile-item-menu').forEach(menu => menu.remove());
-        renderList();
-    }
+        function editItem(index) {
+            items = items.filter(item => !item.editing);
+            items[index].originalText = items[index].text;
+            items[index].editing = true;
+            renderList();
+        }
 
-    function addNewItem() {
-        items = items.filter(item => !item.editing);
-        items.unshift({text: '', editing: true, originalText: ''});
-        document.querySelectorAll('.popup').forEach(popup => popup.remove());
-        const popup = document.createElement('div');
-        popup.className = 'popup';
-        popup.innerHTML = `Введите новый текст. После ввода сохраните данные.`;
-        document.body.appendChild(popup);
-        setTimeout(() => {
-            popup.remove();
-        }, 5000);
-        hideMobileMenu();
-        renderList();
-    }
+        function finishEditing(index) {
+            const input = document.querySelector(`[data-index="${index}"] .item-input`);
+            if (input) {
+                items[index].text = input.value;
+                items[index].editing = false;
+                items[index].originalText = null;
+                hideMobileMenu();
+                renderList();
+            }
+        }
 
-    function editItem(index) {
-        items = items.filter(item => !item.editing);
-        items[index].originalText = items[index].text;
-        items[index].editing = true;
-        renderList();
-    }
+        function handleKeyPress(event, index) {
+            if (event.key === 'Enter') {
+                finishEditing(index);
+            }
+        }
 
-    function finishEditing(index) {
-        const input = document.querySelector(`[data-index="${index}"] .item-input`);
-        if (input) {
-            items[index].text = input.value;
+        function cancelEditing(index) {
+            if (items[index].originalText !== null) {
+                items[index].text = items[index].originalText;
+            }
             items[index].editing = false;
             items[index].originalText = null;
             hideMobileMenu();
             renderList();
         }
-    }
 
-    function handleKeyPress(event, index) {
-        if (event.key === 'Enter') {
-            finishEditing(index);
+        function deleteItem(index) {
+            const itemElement = document.querySelector(`[data-index="${index}"]`);
+            itemElement.classList.add('removing');
+            lastDeletedItem = items[index];
+            lastDeletedIndex = index;
+
+            setTimeout(() => {
+                items.splice(index, 1);
+                hideMobileMenu();
+                renderList();
+            }, 300);
         }
-    }
 
-    function cancelEditing(index) {
-        if (items[index].originalText !== null) {
-            items[index].text = items[index].originalText;
-        }
-        items[index].editing = false;
-        items[index].originalText = null;
-        hideMobileMenu();
-        renderList();
-    }
-
-    function deleteItem(index) {
-        const itemElement = document.querySelector(`[data-index="${index}"]`);
-        itemElement.classList.add('removing');
-        lastDeletedItem = items[index];
-        lastDeletedIndex = index;
-
-        setTimeout(() => {
-            items.splice(index, 1);
-            hideMobileMenu();
-            renderList();
-        }, 300);
-    }
-
-    function undoDelete() {
-        if (lastDeletedItem && lastDeletedIndex !== null) {
-            items.splice(lastDeletedIndex, 0, lastDeletedItem);
-            lastDeletedItem = null;
-            lastDeletedIndex = null;
-            hideMobileMenu();
-            renderList();
-        }
-    }
-
-    function startDrag(event, index) {
-        event.preventDefault();
-        const itemElement = document.querySelector(`[data-index="${index}"]`);
-        draggedElement = itemElement;
-        draggedIndex = index;
-
-        itemElement.style.cursor = 'grabbing';
-
-        function onMouseMove(e) {
-            if (!draggedElement) return;
-
-            draggedElement.classList.add('dragging');
-            draggedElement.style.position = 'fixed';
-            draggedElement.style.left = e.clientX - draggedElement.offsetWidth / 2 + 'px';
-            draggedElement.style.top = e.clientY - 20 + 'px';
-            draggedElement.style.zIndex = '1000';
-            draggedElement.style.pointerEvents = 'none';
-
-            const elements = document.elementsFromPoint(e.clientX, e.clientY);
-            const targetItem = elements.find(el => el.classList.contains('list-item') && !el.classList.contains('dragging'));
-
-            document.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over'));
-
-            if (targetItem) {
-                targetItem.classList.add('drag-over');
+        function undoDelete() {
+            if (lastDeletedItem && lastDeletedIndex !== null) {
+                items.splice(lastDeletedIndex, 0, lastDeletedItem);
+                lastDeletedItem = null;
+                lastDeletedIndex = null;
+                hideMobileMenu();
+                renderList();
             }
         }
 
-        function onMouseUp(e) {
-            document.removeEventListener('mousemove', onMouseMove);
-            document.removeEventListener('mouseup', onMouseUp);
+        function startDrag(event, index) {
+            event.preventDefault();
+            const itemElement = document.querySelector(`[data-index="${index}"]`);
+            draggedElement = itemElement;
+            draggedIndex = index;
 
-            if (!draggedElement) return;
+            itemElement.style.cursor = 'grabbing';
 
-            const elements = document.elementsFromPoint(e.clientX, e.clientY);
-            const targetItem = elements.find(el => el.classList.contains('list-item') && !el.classList.contains('dragging'));
+            function onMouseMove(e) {
+                if (!draggedElement) return;
 
-            if (targetItem) {
-                const targetIndex = parseInt(targetItem.dataset.index);
-                if (targetIndex !== draggedIndex) {
-                    const draggedItem = items[draggedIndex];
-                    items.splice(draggedIndex, 1);
-                    items.splice(targetIndex, 0, draggedItem);
+                draggedElement.classList.add('dragging');
+                draggedElement.style.position = 'fixed';
+                draggedElement.style.left = e.clientX - draggedElement.offsetWidth / 2 + 'px';
+                draggedElement.style.top = e.clientY - 20 + 'px';
+                draggedElement.style.zIndex = '1000';
+                draggedElement.style.pointerEvents = 'none';
+
+                const elements = document.elementsFromPoint(e.clientX, e.clientY);
+                const targetItem = elements.find(el => el.classList.contains('list-item') && !el.classList.contains('dragging'));
+
+                document.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over'));
+
+                if (targetItem) {
+                    targetItem.classList.add('drag-over');
                 }
             }
 
-            draggedElement.style.position = '';
-            draggedElement.style.left = '';
-            draggedElement.style.top = '';
-            draggedElement.style.zIndex = '';
-            draggedElement.style.pointerEvents = '';
-            draggedElement.style.cursor = '';
-            draggedElement.classList.remove('dragging');
+            function onMouseUp(e) {
+                document.removeEventListener('mousemove', onMouseMove);
+                document.removeEventListener('mouseup', onMouseUp);
 
-            document.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over'));
+                if (!draggedElement) return;
 
-            draggedElement = null;
-            draggedIndex = -1;
-            hideMobileMenu();
-            renderList();
+                const elements = document.elementsFromPoint(e.clientX, e.clientY);
+                const targetItem = elements.find(el => el.classList.contains('list-item') && !el.classList.contains('dragging'));
+
+                if (targetItem) {
+                    const targetIndex = parseInt(targetItem.dataset.index);
+                    if (targetIndex !== draggedIndex) {
+                        const draggedItem = items[draggedIndex];
+                        items.splice(draggedIndex, 1);
+                        items.splice(targetIndex, 0, draggedItem);
+                    }
+                }
+
+                draggedElement.style.position = '';
+                draggedElement.style.left = '';
+                draggedElement.style.top = '';
+                draggedElement.style.zIndex = '';
+                draggedElement.style.pointerEvents = '';
+                draggedElement.style.cursor = '';
+                draggedElement.classList.remove('dragging');
+
+                document.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over'));
+
+                draggedElement = null;
+                draggedIndex = -1;
+                hideMobileMenu();
+                renderList();
+            }
+
+            document.addEventListener('mousemove', onMouseMove);
+            document.addEventListener('mouseup', onMouseUp);
         }
 
-        document.addEventListener('mousemove', onMouseMove);
-        document.addEventListener('mouseup', onMouseUp);
-    }
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = [
+                {name: 'Титульник', color: '#E7E7E9', size: 1},
+                {name: 'Содержание', color: '#D4FBE6', size: 1},
+                {name: 'Текст работы', color: '#EFDFF7', size: 10},
+                {name: 'Литература', color: '#D3FAF8', size: 1}
+            ];
 
-    // Initialize
-    renderList();
+            function updateBar() {
+                const visualSizes = sections.map((sec, index) => index === 2 ? sec.size : sec.size * 3);
+                const total = visualSizes.reduce((sum, size) => sum + size, 0);
+                const bar = document.getElementById('volumeBar');
+                const labels = document.getElementById('volumeLabels');
+                bar.innerHTML = sections.map((sec, index) => `
+            <div class="section" style="width: ${(visualSizes[index] / total * 100).toFixed(2)}%; background-color: ${sec.color};">
+                <span class="section-size">${sec.size}</span>
+            </div>
+        `).join('');
+                labels.innerHTML = sections.map((sec, index) => `
+            <span class="section-label" style="flex: 0 0 ${(visualSizes[index] / total * 100).toFixed(2)}%;">${sec.name}</span>
+        `).join('');
+            }
 
-</script>
+            const textInput = document.getElementById('textPages');
+            textInput.addEventListener('input', () => {
+                let value = parseInt(textInput.value);
+                if (isNaN(value) || value < 1) value = 1;
+                sections[2].size = value;
+                textInput.value = value;
+                updateBar();
+            });
+
+            document.getElementById('decrement').addEventListener('click', () => {
+                textInput.value = Math.max(1, parseInt(textInput.value) - 1);
+                textInput.dispatchEvent(new Event('input'));
+            });
+
+            document.getElementById('increment').addEventListener('click', () => {
+                textInput.value = parseInt(textInput.value) + 1;
+                textInput.dispatchEvent(new Event('input'));
+            });
+
+            updateBar();
+        });
+
+        // Initialize
+        renderList();
+    </script>
 </body>
 </html>

@@ -588,6 +588,141 @@ button {
     content: url("files/cross.svg");
 }
 
+.volume-block {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 20px;
+}
+
+.volume-component {
+    margin-top: 20px;
+    width: 100%;
+}
+
+.volume-bar {
+    display: flex;
+    height: 40px;
+    width: 100%;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid #ccc;
+}
+
+.section {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #333;
+    font-size: 14px;
+    font-weight: bold;
+    transition: width 0.3s ease;
+}
+
+.section-size {
+    text-shadow: 0 0 2px #fff;
+}
+
+.volume-labels {
+    display: flex;
+    margin-top: 5px;
+    width: 100%;
+}
+
+.section-label {
+    font-size: 12px;
+    color: #333;
+    text-align: center;
+    flex: 1;
+}
+
+.section-label:nth-child(1) {
+    flex: 0 0 15.79%;
+}
+
+.section-label:nth-child(2) {
+    flex: 0 0 15.79%;
+}
+
+.section-label:nth-child(3) {
+    flex: 0 0 52.63%;
+}
+
+.section-label:nth-child(4) {
+    flex: 0 0 15.79%;
+}
+
+.volume-input {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.volume-input button {
+    width: 40px;
+    height: 40px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.volume-input button:hover {
+    background-color: #e0e0e0;
+}
+
+.volume-input input {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.volume-input input::-webkit-outer-spin-button,
+.volume-input input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.volume-input input[type=number] {
+    -moz-appearance: textfield;
+}
+
+@media (max-width: 1080px) {
+    .volume-block {
+        flex-direction: column;
+    }
+
+    .volume-input {
+        width: 100%;
+    }
+
+    .section-size {
+        font-size: 12px;
+    }
+
+    .section-label {
+        font-size: 10px;
+    }
+
+    .volume-input input {
+        width: 100%;
+        height: 35px;
+        font-size: 14px;
+    }
+
+    .volume-input button {
+        width: 35px;
+        height: 35px;
+        font-size: 18px;
+    }
+}
+
 /* Адаптивность */
 @media (max-width: 768px) {
     .logo {
