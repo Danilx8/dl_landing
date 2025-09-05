@@ -123,7 +123,7 @@
                 </div>
                 <div class="input-container">
                     <h2 class="input-title">Цели работы</h2>
-                    <button class="add-button" onclick="addNewItem()">
+                    <button class="add-button" onclick="addNewItem('listContainer')">
                         ➕ Добавить элемент
                     </button>
                     <div class="list-container" id="listContainer">
@@ -164,136 +164,141 @@
                         </div>
                     </div>
                 </div>
+                <div class="input-container">
+                    <h2 class="input-title">Содержание работы</h2>
+                    <button class="add-button" onclick="addNewItem('topicsContainer')">➕ Добавить элемент</button>
+                    <div class="list-container" id="topicsContainer">
+                        <div class="empty-state">Список пуст. Нажмите кнопку выше, чтобы добавить первый элемент.
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <!-- Навигационные кнопки -->
-        <div class="navigation-buttons">
-            <button class="nav-button back">
-                <svg class="nav-icon" width="18" height="18" viewBox="0 0 18 18" fill="none"
-                     xmlns="http://www.w3.org/2000/svg">
-                    <path d="M14.25 9L3.75 9" stroke="#0F172A" stroke-width="1.5" stroke-linecap="round"
-                          stroke-linejoin="round"/>
-                    <path d="M9 14.25L3.75 9L9 3.75" stroke="#0F172A" stroke-width="1.5" stroke-linecap="round"
-                          stroke-linejoin="round"/>
-                </svg>
-                Назад
-            </button>
-            <button class="nav-button next">Следующий шаг
-                <svg class="nav-icon" width="18" height="18" viewBox="0 0 18 18" fill="none"
-                     xmlns="http://www.w3.org/2000/svg">
-                    <path d="M3.75 9H14.25" stroke="white" stroke-width="1.5" stroke-linecap="round"
-                          stroke-linejoin="round"/>
-                    <path d="M9 3.75L14.25 9L9 14.25" stroke="white" stroke-width="1.5" stroke-linecap="round"
-                          stroke-linejoin="round"/>
-                </svg>
-            </button>
-        </div>
-
-        <!-- Социальные сети (десктоп) -->
-        <div class="social-links">
-            <a href="#" class="social-link" title="Profile page">
-                <svg class="social-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                     viewBox="0 0 16 16">
-                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
-                </svg>
-                Личный кабинет</a>
-            <a href="#" class="social-link" title="Telegram"><?xml version="1.0" encoding="utf-8"?>
-                <svg class="social-icon" width="800px" height="800px" viewBox="0 0 48 48" fill="none"
-                     xmlns="http://www.w3.org/2000/svg">
-                    <path d="M41.4193 7.30899C41.4193 7.30899 45.3046 5.79399 44.9808 9.47328C44.8729 10.9883 43.9016 16.2908 43.1461 22.0262L40.5559 39.0159C40.5559 39.0159 40.3401 41.5048 38.3974 41.9377C36.4547 42.3705 33.5408 40.4227 33.0011 39.9898C32.5694 39.6652 24.9068 34.7955 22.2086 32.4148C21.4531 31.7655 20.5897 30.4669 22.3165 28.9519L33.6487 18.1305C34.9438 16.8319 36.2389 13.8019 30.8426 17.4812L15.7331 27.7616C15.7331 27.7616 14.0063 28.8437 10.7686 27.8698L3.75342 25.7055C3.75342 25.7055 1.16321 24.0823 5.58815 22.459C16.3807 17.3729 29.6555 12.1786 41.4193 7.30899Z"
-                          fill="#000000"/>
-                </svg>
-                Поддержка 24/7</a>
-        </div>
-
-        <!-- Кнопка мобильного меню -->
-        <button class="mobile-menu-toggle">☰</button>
     </div>
+
+    <!-- Навигационные кнопки -->
+    <div class="navigation-buttons">
+        <button class="nav-button back">
+            <svg class="nav-icon" width="18" height="18" viewBox="0 0 18 18" fill="none"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path d="M14.25 9L3.75 9" stroke="#0F172A" stroke-width="1.5" stroke-linecap="round"
+                      stroke-linejoin="round"/>
+                <path d="M9 14.25L3.75 9L9 3.75" stroke="#0F172A" stroke-width="1.5" stroke-linecap="round"
+                      stroke-linejoin="round"/>
+            </svg>
+            Назад
+        </button>
+        <button class="nav-button next">Следующий шаг
+            <svg class="nav-icon" width="18" height="18" viewBox="0 0 18 18" fill="none"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path d="M3.75 9H14.25" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                      stroke-linejoin="round"/>
+                <path d="M9 3.75L14.25 9L9 14.25" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                      stroke-linejoin="round"/>
+            </svg>
+        </button>
+    </div>
+
+    <!-- Социальные сети (десктоп) -->
+    <div class="social-links">
+        <a href="#" class="social-link" title="Profile page">
+            <svg class="social-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                 viewBox="0 0 16 16">
+                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+            </svg>
+            Личный кабинет</a>
+        <a href="#" class="social-link" title="Telegram"><?xml version="1.0" encoding="utf-8"?>
+            <svg class="social-icon" width="800px" height="800px" viewBox="0 0 48 48" fill="none"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path d="M41.4193 7.30899C41.4193 7.30899 45.3046 5.79399 44.9808 9.47328C44.8729 10.9883 43.9016 16.2908 43.1461 22.0262L40.5559 39.0159C40.5559 39.0159 40.3401 41.5048 38.3974 41.9377C36.4547 42.3705 33.5408 40.4227 33.0011 39.9898C32.5694 39.6652 24.9068 34.7955 22.2086 32.4148C21.4531 31.7655 20.5897 30.4669 22.3165 28.9519L33.6487 18.1305C34.9438 16.8319 36.2389 13.8019 30.8426 17.4812L15.7331 27.7616C15.7331 27.7616 14.0063 28.8437 10.7686 27.8698L3.75342 25.7055C3.75342 25.7055 1.16321 24.0823 5.58815 22.459C16.3807 17.3729 29.6555 12.1786 41.4193 7.30899Z"
+                      fill="#000000"/>
+            </svg>
+            Поддержка 24/7</a>
+    </div>
+
+    <!-- Кнопка мобильного меню -->
+    <button class="mobile-menu-toggle">☰</button>
 </div>
 
 <script>
-    document.querySelectorAll('.theme-block').forEach((item, index) => {
-        item.addEventListener('click', () => {
-            document.querySelectorAll('.theme-block').forEach(block => block.classList.remove('active'));
-            item.classList.add('active');
-        })
-    })
-
-    // Клики по шагам (десктоп)
-    document.querySelectorAll('.step-item').forEach((item, index) => {
-        item.addEventListener('click', () => {
-            document.querySelectorAll('.step-item').forEach(step => step.classList.remove('active'));
-            item.classList.add('active');
-        });
-    });
-
-    // Клики по мобильным шагам
-    document.querySelectorAll('.mobile-step-item').forEach((item, index) => {
-        item.addEventListener('click', () => {
-            document.querySelectorAll('.mobile-step-item').forEach(step => step.classList.remove('active'));
-            item.classList.add('active');
-        });
-    });
-
-    // Навигационные кнопки
-    document.querySelector('.nav-button.next').addEventListener('click', () => {
-        console.log('Следующий шаг');
-    });
-
-    document.querySelector('.nav-button.back').addEventListener('click', () => {
-        console.log('Предыдущий шаг');
-    });
-
-    let items = [];
-    let draggedElement = null;
-    let draggedIndex = -1;
-    let lastDeletedItem = null;
-    let lastDeletedIndex = null;
-    let mobileMenuIndex = -1;
-
     function isMobile() {
-        return window.innerWidth <= 768; // Adjust threshold as needed
+        return window.innerWidth <= 768;
     }
 
-    function renderList() {
-        const container = document.getElementById('listContainer');
+    function renderList(containerId) {
+        const container = document.getElementById(containerId);
+        const isTopics = containerId === 'topicsContainer';
+        const itemList = items[containerId];
 
-        if (items.length === 0) {
+        if (itemList.length === 0) {
             container.innerHTML = '<div class="empty-state">Список пуст. Нажмите кнопку выше, чтобы добавить первый элемент.</div>';
             return;
         }
 
-        container.innerHTML = items.map((item, index) => `
-        <div class="list-item" data-index="${index}" draggable="false">
+        container.innerHTML = itemList.map((item, index) => `
+        <div class="${isTopics ? 'topic-item' : 'list-item'}" data-index="${index}" draggable="${isTopics ? 'false' : 'true'}">
             <div class="item-content">
                 <div class="item-number">${index + 1}</div>
-                <div class="item-text" style="display: ${item.editing ? 'none' : 'block'}" onclick="handleItemClick(${index})">${item.text || 'Пустой элемент'}</div>
+                <div class="item-text" style="display: ${item.editing ? 'none' : 'flex'}" onclick="handleItemClick(${index}, '${containerId}')">${item.text || 'Пустой элемент'}</div>
                 <input
                     type="text"
                     class="item-input"
                     value="${item.text || ''}"
                     placeholder="Введите текст..."
                     style="display: ${item.editing ? 'block' : 'none'}"
-                    onblur="finishEditing(${index})"
-                    onkeypress="handleKeyPress(event, ${index})"
+                    onblur="finishEditing(${index}, '${containerId}')"
+                    onkeypress="handleKeyPress(event, ${index}, '${containerId}')"
                 />
-                <div class="item-controls" style="display: ${item.editing || isMobile() ? 'none' : 'block'}">
-                    <button class="control-button drag-button" onmousedown="startDrag(event, ${index})" title="Перетащить"></button>
-                    <button class="control-button delete-button" onclick="event.stopPropagation(); deleteItem(${index})" title="Удалить"></button>
+                <div class="item-controls" style="display: ${item.editing || isMobile() ? 'none' : 'flex'}">
+                    ${isTopics ? `
+                        <button class="control-button add-sub-button" onclick="event.stopPropagation(); addSubItem(${index}, '${containerId}')" title="Добавить подраздел"></button>
+                    ` : ''}
+                    ${!isTopics ? `
+                        <button class="control-button drag-button" onmousedown="startDrag(event, ${index}, '${containerId}')" title="Перетащить"></button>
+                    ` : ''}
+                    <button class="control-button delete-button" onclick="event.stopPropagation(); deleteItem(${index}, '${containerId}')" title="Удалить"></button>
                 </div>
                 ${item.editing ? `
                     <div class="item-controls">
-                        <button class="control-button confirm-button" onclick="event.stopPropagation(); finishEditing(${index})" title="Подтвердить"></button>
-                        <button class="control-button cancel-button" onclick="event.stopPropagation(); cancelEditing(${index})" title="Отменить"></button>
+                        <button class="control-button confirm-button" onclick="event.stopPropagation(); finishEditing(${index}, '${containerId}')" title="Подтвердить"></button>
+                        <button class="control-button cancel-button" onclick="event.stopPropagation(); cancelEditing(${index}, '${containerId}')" title="Отменить"></button>
                     </div>
                 ` : ''}
             </div>
+            ${isTopics && item.subItems ? `
+                <div class="sub-items">
+                    ${item.subItems.map((subItem, subIndex) => `
+                        <div class="sub-item" data-index="${index}" data-sub-index="${subIndex}">
+                            <div class="item-content">
+                                <div class="item-number">${index + 1}.${subIndex + 1}</div>
+                                <div class="item-text" style="display: ${subItem.editing ? 'none' : 'block'}" onclick="handleItemClick(${index}, '${containerId}', ${subIndex})">${subItem.text || 'Пустой подраздел'}</div>
+                                <input
+                                    type="text"
+                                    class="item-input"
+                                    value="${subItem.text || ''}"
+                                    placeholder="Введите текст..."
+                                    style="display: ${subItem.editing ? 'block' : 'none'}"
+                                    onblur="finishEditing(${index}, '${containerId}', ${subIndex})"
+                                    onkeypress="handleKeyPress(event, ${index}, '${containerId}', ${subIndex})"
+                                />
+                                <div class="item-controls" style="display: ${subItem.editing || isMobile() ? 'none' : 'block'}">
+                                    <button class="control-button delete-button" onclick="event.stopPropagation(); deleteItem(${index}, '${containerId}', ${subIndex})" title="Удалить"></button>
+                                </div>
+                                ${subItem.editing ? `
+                                    <div class="item-controls">
+                                        <button class="control-button confirm-button" onclick="event.stopPropagation(); finishEditing(${index}, '${containerId}', ${subIndex})" title="Подтвердить"></button>
+                                        <button class="control-button cancel-button" onclick="event.stopPropagation(); cancelEditing(${index}, '${containerId}', ${subIndex})" title="Отменить"></button>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            ` : ''}
         </div>
     `).join('');
 
-        // Auto-focus on newly added or edited item
-        const editingItems = items.map((item, index) => item.editing ? index : -1).filter(i => i !== -1);
+        const editingItems = itemList.map((item, index) => item.editing ? index : -1).filter(i => i !== -1);
         if (editingItems.length > 0) {
             setTimeout(() => {
                 const input = container.querySelector(`[data-index="${editingItems[0]}"] .item-input`);
@@ -301,55 +306,90 @@
             }, 100);
         }
 
-        // Render mobile menu if active
-        if (isMobile() && mobileMenuIndex !== -1) {
+        if (isTopics) {
+            itemList.forEach((item, index) => {
+                if (item.subItems) {
+                    const editingSubItems = item.subItems.map((subItem, subIndex) => subItem.editing ? subIndex : -1).filter(i => i !== -1);
+                    if (editingSubItems.length > 0) {
+                        setTimeout(() => {
+                            const input = container.querySelector(`[data-index="${index}"][data-sub-index="${editingSubItems[0]}"] .item-input`);
+                            if (input) input.focus();
+                        }, 100);
+                    }
+                }
+            });
+        }
+
+        if (isMobile() && (mobileMenuIndex !== -1 || mobileMenuSubIndex !== -1)) {
             document.querySelectorAll('.mobile-item-menu').forEach(menu => menu.remove());
             const navButtons = document.querySelector('.navigation-buttons');
             const menu = document.createElement('div');
             menu.className = 'mobile-item-menu';
-            menu.innerHTML = `
-            <button class="control-button edit-button" onclick="editItem(${mobileMenuIndex}); hideMobileMenu()" title="Редактировать"></button>
-            <button class="control-button drag-button" onmousedown="startDrag(event, ${mobileMenuIndex})" title="Перетащить"></button>
-            <button class="control-button delete-button" onclick="deleteItem(${mobileMenuIndex}); hideMobileMenu()" title="Удалить"></button>
-            <button class="control-button close-button" onclick="hideMobileMenu()" title="Скрыть"/>
-        `;
+            if (mobileMenuSubIndex !== -1) {
+                // Sub-item menu
+                menu.innerHTML = `
+                <button class="control-button edit-button" onclick="editItem(${mobileMenuIndex}, '${containerId}', ${mobileMenuSubIndex}); hideMobileMenu()" title="Редактировать"></button>
+                <button class="control-button delete-button" onclick="deleteItem(${mobileMenuIndex}, '${containerId}', ${mobileMenuSubIndex}); hideMobileMenu()" title="Удалить"></button>
+                <button class="control-button close-button" onclick="hideMobileMenu()" title="Скрыть"></button>
+            `;
+            } else {
+                // Top-level item menu
+                menu.innerHTML = `
+                <button class="control-button edit-button" onclick="editItem(${mobileMenuIndex}, '${containerId}'); hideMobileMenu()" title="Редактировать"></button>
+                ${isTopics ? `
+                    <button class="control-button add-sub-button" onclick="addSubItem(${mobileMenuIndex}, '${containerId}'); hideMobileMenu()" title="Добавить подраздел"></button>
+                ` : ''}
+                ${!isTopics ? `
+                    <button class="control-button drag-button" onmousedown="startDrag(event, ${mobileMenuIndex}, '${containerId}')" title="Перетащить"></button>
+                ` : ''}
+                <button class="control-button delete-button" onclick="deleteItem(${mobileMenuIndex}, '${containerId}'); hideMobileMenu()" title="Удалить"></button>
+                <button class="control-button close-button" onclick="hideMobileMenu()" title="Скрыть"></button>
+            `;
+            }
             navButtons.parentNode.insertBefore(menu, navButtons);
         }
 
-        // Render undo popup if an item was deleted
-        if (lastDeletedItem) {
+        if (lastDeleted[containerId]) {
             document.querySelectorAll('.popup').forEach(popup => popup.remove());
             const popup = document.createElement('div');
             popup.className = 'popup';
             popup.innerHTML = `Элемент удалён, нажми тут для отмены`;
-            popup.onclick = undoDelete;
+            popup.onclick = () => undoDelete(containerId);
             document.body.appendChild(popup);
             setTimeout(() => {
                 popup.remove();
-                lastDeletedItem = null;
-                lastDeletedIndex = null;
+                lastDeleted[containerId] = null;
+                lastDeletedIndex[containerId] = null;
             }, 5000);
         }
     }
 
-    function handleItemClick(index) {
+    function handleItemClick(index, containerId, subIndex = null) {
         if (isMobile()) {
             mobileMenuIndex = index;
-            renderList();
+            mobileMenuSubIndex = subIndex !== null ? subIndex : -1;
+            renderList(containerId);
         } else {
-            editItem(index);
+            editItem(index, containerId, subIndex);
         }
     }
 
     function hideMobileMenu() {
         mobileMenuIndex = -1;
+        mobileMenuSubIndex = -1;
         document.querySelectorAll('.mobile-item-menu').forEach(menu => menu.remove());
-        renderList();
+        renderList('listContainer');
+        renderList('topicsContainer');
     }
 
-    function addNewItem() {
-        items = items.filter(item => !item.editing);
-        items.unshift({text: '', editing: true, originalText: ''});
+    function addNewItem(containerId) {
+        items[containerId] = items[containerId].filter(item => !item.editing);
+        items[containerId].unshift({
+            text: '',
+            editing: true,
+            originalText: '',
+            subItems: containerId === 'topicsContainer' ? [] : null
+        });
         document.querySelectorAll('.popup').forEach(popup => popup.remove());
         const popup = document.createElement('div');
         popup.className = 'popup';
@@ -359,67 +399,119 @@
             popup.remove();
         }, 5000);
         hideMobileMenu();
-        renderList();
+        renderList(containerId);
     }
 
-    function editItem(index) {
-        items = items.filter(item => !item.editing);
-        items[index].originalText = items[index].text;
-        items[index].editing = true;
-        renderList();
-    }
-
-    function finishEditing(index) {
-        const input = document.querySelector(`[data-index="${index}"] .item-input`);
-        if (input) {
-            items[index].text = input.value;
-            items[index].editing = false;
-            items[index].originalText = null;
-            hideMobileMenu();
-            renderList();
-        }
-    }
-
-    function handleKeyPress(event, index) {
-        if (event.key === 'Enter') {
-            finishEditing(index);
-        }
-    }
-
-    function cancelEditing(index) {
-        if (items[index].originalText !== null) {
-            items[index].text = items[index].originalText;
-        }
-        items[index].editing = false;
-        items[index].originalText = null;
+    function addSubItem(index, containerId) {
+        if (containerId !== 'topicsContainer') return;
+        items[containerId][index].subItems = items[containerId][index].subItems || [];
+        items[containerId][index].subItems.unshift({text: '', editing: true, originalText: ''});
         hideMobileMenu();
-        renderList();
+        renderList(containerId);
     }
 
-    function deleteItem(index) {
-        const itemElement = document.querySelector(`[data-index="${index}"]`);
-        itemElement.classList.add('removing');
-        lastDeletedItem = items[index];
-        lastDeletedIndex = index;
-
-        setTimeout(() => {
-            items.splice(index, 1);
-            hideMobileMenu();
-            renderList();
-        }, 300);
+    function editItem(index, containerId, subIndex = null) {
+        items[containerId] = items[containerId].filter(item => !item.editing);
+        if (subIndex !== null) {
+            items[containerId][index].subItems = items[containerId][index].subItems.map(subItem => ({
+                ...subItem,
+                editing: false
+            }));
+            items[containerId][index].subItems[subIndex].originalText = items[containerId][index].subItems[subIndex].text;
+            items[containerId][index].subItems[subIndex].editing = true;
+        } else {
+            items[containerId][index].originalText = items[containerId][index].text;
+            items[containerId][index].editing = true;
+        }
+        renderList(containerId);
     }
 
-    function undoDelete() {
-        if (lastDeletedItem && lastDeletedIndex !== null) {
-            items.splice(lastDeletedIndex, 0, lastDeletedItem);
-            lastDeletedItem = null;
-            lastDeletedIndex = null;
+    function finishEditing(index, containerId, subIndex = null) {
+        const selector = subIndex !== null
+            ? `[data-index="${index}"][data-sub-index="${subIndex}"] .item-input`
+            : `[data-index="${index}"] .item-input`;
+        const input = document.querySelector(selector);
+        if (input) {
+            if (subIndex !== null) {
+                items[containerId][index].subItems[subIndex].text = input.value;
+                items[containerId][index].subItems[subIndex].editing = false;
+                items[containerId][index].subItems[subIndex].originalText = null;
+            } else {
+                items[containerId][index].text = input.value;
+                items[containerId][index].editing = false;
+                items[containerId][index].originalText = null;
+            }
             hideMobileMenu();
-            renderList();
+            renderList(containerId);
         }
     }
 
-    function startDrag(event, index) {
+    function handleKeyPress(event, index, containerId, subIndex = null) {
+        if (event.key === 'Enter') {
+            finishEditing(index, containerId, subIndex);
+        }
+    }
+
+    function cancelEditing(index, containerId, subIndex = null) {
+        if (subIndex !== null) {
+            if (items[containerId][index].subItems[subIndex].originalText !== null) {
+                items[containerId][index].subItems[subIndex].text = items[containerId][index].subItems[subIndex].originalText;
+            }
+            items[containerId][index].subItems[subIndex].editing = false;
+            items[containerId][index].subItems[subIndex].originalText = null;
+        } else {
+            if (items[containerId][index].originalText !== null) {
+                items[containerId][index].text = items[containerId][index].originalText;
+            }
+            items[containerId][index].editing = false;
+            items[containerId][index].originalText = null;
+        }
+        hideMobileMenu();
+        renderList(containerId);
+    }
+
+    function deleteItem(index, containerId, subIndex = null) {
+        const selector = subIndex !== null
+            ? `[data-index="${index}"][data-sub-index="${subIndex}"]`
+            : `[data-index="${index}"]`;
+        const itemElement = document.querySelector(selector);
+        itemElement.classList.add('removing');
+        if (subIndex !== null) {
+            lastDeleted[containerId] = items[containerId][index].subItems[subIndex];
+            lastDeletedIndex[containerId] = {index, subIndex};
+            setTimeout(() => {
+                items[containerId][index].subItems.splice(subIndex, 1);
+                hideMobileMenu();
+                renderList(containerId);
+            }, 300);
+        } else {
+            lastDeleted[containerId] = items[containerId][index];
+            lastDeletedIndex[containerId] = {index};
+            setTimeout(() => {
+                items[containerId].splice(index, 1);
+                hideMobileMenu();
+                renderList(containerId);
+            }, 300);
+        }
+    }
+
+    function undoDelete(containerId) {
+        if (lastDeleted[containerId] && lastDeletedIndex[containerId] !== null) {
+            const {index, subIndex} = lastDeletedIndex[containerId];
+            if (subIndex !== undefined) {
+                items[containerId][index].subItems.splice(subIndex, 0, lastDeleted[containerId]);
+            } else {
+                items[containerId].splice(index, 0, lastDeleted[containerId]);
+            }
+            lastDeleted[containerId] = null;
+            lastDeletedIndex[containerId] = null;
+            hideMobileMenu();
+            renderList(containerId);
+        }
+    }
+
+    function startDrag(event, index, containerId) {
+        if (containerId === 'topicsContainer') return;
         event.preventDefault();
         const itemElement = document.querySelector(`[data-index="${index}"]`);
         draggedElement = itemElement;
@@ -459,9 +551,9 @@
             if (targetItem) {
                 const targetIndex = parseInt(targetItem.dataset.index);
                 if (targetIndex !== draggedIndex) {
-                    const draggedItem = items[draggedIndex];
-                    items.splice(draggedIndex, 1);
-                    items.splice(targetIndex, 0, draggedItem);
+                    const draggedItem = items[containerId][draggedIndex];
+                    items[containerId].splice(draggedIndex, 1);
+                    items[containerId].splice(targetIndex, 0, draggedItem);
                 }
             }
 
@@ -478,60 +570,101 @@
             draggedElement = null;
             draggedIndex = -1;
             hideMobileMenu();
-            renderList();
+            renderList(containerId);
         }
 
         document.addEventListener('mousemove', onMouseMove);
         document.addEventListener('mouseup', onMouseUp);
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-        const sections = [
-            {name: 'Титульник', color: '#E7E7E9', size: 1},
-            {name: 'Содержание', color: '#D4FBE6', size: 1},
-            {name: 'Текст работы', color: '#EFDFF7', size: 10},
-            {name: 'Литература', color: '#D3FAF8', size: 1}
-        ];
+    // Theme selection
+    document.querySelectorAll('.theme-block').forEach((item) => {
+        item.addEventListener('click', () => {
+            document.querySelectorAll('.theme-block').forEach(block => block.classList.remove('active'));
+            item.classList.add('active');
+        });
+    });
 
-        function updateBar() {
-            const visualSizes = sections.map((sec, index) => index === 2 ? sec.size : sec.size * 3);
-            const total = visualSizes.reduce((sum, size) => sum + size, 0);
-            const bar = document.getElementById('volumeBar');
-            const labels = document.getElementById('volumeLabels');
-            bar.innerHTML = sections.map((sec, index) => `
+    // Desktop steps
+    document.querySelectorAll('.step-item').forEach((item) => {
+        item.addEventListener('click', () => {
+            document.querySelectorAll('.step-item').forEach(step => step.classList.remove('active'));
+            item.classList.add('active');
+        });
+    });
+
+    // Mobile steps
+    document.querySelectorAll('.mobile-step-item').forEach((item) => {
+        item.addEventListener('click', () => {
+            document.querySelectorAll('.mobile-step-item').forEach(step => step.classList.remove('active'));
+            item.classList.add('active');
+        });
+    });
+
+    // Navigation buttons
+    document.querySelector('.nav-button.next').addEventListener('click', () => {
+        console.log('Следующий шаг');
+    });
+
+    document.querySelector('.nav-button.back').addEventListener('click', () => {
+        console.log('Предыдущий шаг');
+    });
+
+    // List and Topics management
+    let items = {listContainer: [], topicsContainer: []};
+    let draggedElement = null;
+    let draggedIndex = -1;
+    let lastDeleted = {listContainer: null, topicsContainer: null};
+    let lastDeletedIndex = {listContainer: null, topicsContainer: null};
+    let mobileMenuIndex = -1;
+    let mobileMenuSubIndex = -1;
+
+    // Volume component
+    const sections = [
+        {name: 'Титульник', color: '#E7E7E9', size: 1},
+        {name: 'Содержание', color: '#D4FBE6', size: 1},
+        {name: 'Текст работы', color: '#EFDFF7', size: 10},
+        {name: 'Литература', color: '#D3FAF8', size: 1}
+    ];
+
+    function updateBar() {
+        const visualSizes = sections.map((sec, index) => index === 2 ? sec.size : sec.size * 3);
+        const total = visualSizes.reduce((sum, size) => sum + size, 0);
+        const bar = document.getElementById('volumeBar');
+        const labels = document.getElementById('volumeLabels');
+        bar.innerHTML = sections.map((sec, index) => `
             <div class="section" style="width: ${(visualSizes[index] / total * 100).toFixed(2)}%; background-color: ${sec.color};">
                 <span class="section-size">${sec.size}</span>
             </div>
         `).join('');
-            labels.innerHTML = sections.map((sec, index) => `
+        labels.innerHTML = sections.map((sec, index) => `
             <span class="section-label" style="flex: 0 0 ${(visualSizes[index] / total * 100).toFixed(2)}%;">${sec.name}</span>
         `).join('');
-        }
+    }
 
-        const textInput = document.getElementById('textPages');
-        textInput.addEventListener('input', () => {
-            let value = parseInt(textInput.value);
-            if (isNaN(value) || value < 1) value = 1;
-            sections[2].size = value;
-            textInput.value = value;
-            updateBar();
-        });
-
-        document.getElementById('decrement').addEventListener('click', () => {
-            textInput.value = Math.max(1, parseInt(textInput.value) - 1);
-            textInput.dispatchEvent(new Event('input'));
-        });
-
-        document.getElementById('increment').addEventListener('click', () => {
-            textInput.value = parseInt(textInput.value) + 1;
-            textInput.dispatchEvent(new Event('input'));
-        });
-
+    const textInput = document.getElementById('textPages');
+    textInput.addEventListener('input', () => {
+        let value = parseInt(textInput.value);
+        if (isNaN(value) || value < 1) value = 1;
+        sections[2].size = value;
+        textInput.value = value;
         updateBar();
     });
 
+    document.getElementById('decrement').addEventListener('click', () => {
+        textInput.value = Math.max(1, parseInt(textInput.value) - 1);
+        textInput.dispatchEvent(new Event('input'));
+    });
+
+    document.getElementById('increment').addEventListener('click', () => {
+        textInput.value = parseInt(textInput.value) + 1;
+        textInput.dispatchEvent(new Event('input'));
+    });
+
     // Initialize
-    renderList();
+    renderList('listContainer');
+    renderList('topicsContainer');
+    updateBar();
 </script>
 </body>
 </html>
