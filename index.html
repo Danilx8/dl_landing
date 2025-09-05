@@ -13,11 +13,11 @@
     <!-- Боковая панель с шагами (десктоп) -->
     <div class="steps-sidebar">
         <ul class="steps-list">
-            <li class="step-item active">
-                <div class="step-number">1</div>
+            <li class="step-item complete">
+                <div class="step-number"></div>
                 <div class="step-title">Укажи тему работы</div>
             </li>
-            <li class="step-item">
+            <li class="step-item active">
                 <div class="step-number">2</div>
                 <div class="step-title">Согласуй цели и объёмы</div>
             </li>
@@ -121,6 +121,20 @@
                     <textarea class="input-text" name="Topic" cols="30" rows="10"
                               placeholder="Криптография. Сквозное шифрование"></textarea>
                 </div>
+                <div class="input-container">
+                    <h2 class="input-title">Цели работы</h2>
+                    <button class="add-button" onclick="addNewItem()">
+                        ➕ Добавить элемент
+                    </button>
+                    <div class="list-container" id="listContainer">
+                        <div class="empty-state">
+                            Список пуст. Нажмите кнопку выше, чтобы добавить первый элемент.
+                        </div>
+                    </div>
+                </div>
+                <div class="input-container">
+                    <h2 class="input-title">Объём работы</h2>
+                </div>
             </div>
         </div>
     </div>
@@ -171,13 +185,19 @@
     <!-- Мобильное выдвигающееся меню -->
     <div class="mobile-menu-overlay">
         <div class="mobile-social">
-            <h3>Социальные сети</h3>
-            <div class="mobile-social-links">
-                <a href="#" class="mobile-social-link" title="VK">В</a>
-                <a href="#" class="mobile-social-link" title="Telegram">Т</a>
-                <a href="#" class="mobile-social-link" title="Instagram">И</a>
-                <a href="#" class="mobile-social-link" title="WhatsApp">W</a>
-            </div>
+            <a href="#" class="social-link" title="Profile page">
+                <svg class="social-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                     viewBox="0 0 16 16">
+                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+                </svg>
+                Личный кабинет</a>
+            <a href="#" class="social-link" title="Telegram"><?xml version="1.0" encoding="utf-8"?>
+                <svg class="social-icon" width="800px" height="800px" viewBox="0 0 48 48" fill="none"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path d="M41.4193 7.30899C41.4193 7.30899 45.3046 5.79399 44.9808 9.47328C44.8729 10.9883 43.9016 16.2908 43.1461 22.0262L40.5559 39.0159C40.5559 39.0159 40.3401 41.5048 38.3974 41.9377C36.4547 42.3705 33.5408 40.4227 33.0011 39.9898C32.5694 39.6652 24.9068 34.7955 22.2086 32.4148C21.4531 31.7655 20.5897 30.4669 22.3165 28.9519L33.6487 18.1305C34.9438 16.8319 36.2389 13.8019 30.8426 17.4812L15.7331 27.7616C15.7331 27.7616 14.0063 28.8437 10.7686 27.8698L3.75342 25.7055C3.75342 25.7055 1.16321 24.0823 5.58815 22.459C16.3807 17.3729 29.6555 12.1786 41.4193 7.30899Z"
+                          fill="#000000"/>
+                </svg>
+                Поддержка 24/7</a>
         </div>
     </div>
 </div>
@@ -231,6 +251,170 @@
     document.querySelector('.nav-button.back').addEventListener('click', () => {
         console.log('Предыдущий шаг');
     });
+
+    let items = [];
+    let draggedElement = null;
+    let draggedIndex = -1;
+
+    function updateNumbers() {
+        const itemElements = document.querySelectorAll('.list-item');
+        itemElements.forEach((item, index) => {
+            const numberElement = item.querySelector('.item-number');
+            numberElement.textContent = index + 1;
+        });
+    }
+
+    function renderList() {
+        const container = document.getElementById('listContainer');
+
+        if (items.length === 0) {
+            container.innerHTML = '<div class="empty-state">Список пуст. Нажмите кнопку выше, чтобы добавить первый элемент.</div>';
+            return;
+        }
+
+        container.innerHTML = items.map((item, index) => `
+                <div class="list-item" data-index="${index}" draggable="false">
+                    <div class="item-content" onclick="editItem(${index})">
+                        <div class="item-number">${index + 1}</div>
+                        <div class="item-text" style="display: ${item.editing ? 'none' : 'block'}">${item.text || 'Пустой элемент'}</div>
+                        <input
+                            type="text"
+                            class="item-input"
+                            value="${item.text || ''}"
+                            placeholder="Введите текст..."
+                            style="display: ${item.editing ? 'block' : 'none'}"
+                            onblur="finishEditing(${index})"
+                            onkeypress="handleKeyPress(event, ${index})"
+                        />
+                        <div class="item-controls">
+                            <button class="control-button drag-button" onmousedown="startDrag(event, ${index})" title="Перетащить">
+                            </button>
+                            <button class="control-button delete-button" onclick="deleteItem(${index})" title="Удалить">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+        // Auto-focus on newly added items
+        const editingItems = items.map((item, index) => item.editing ? index : -1).filter(i => i !== -1);
+        if (editingItems.length > 0) {
+            setTimeout(() => {
+                const input = container.querySelector(`[data-index="${editingItems[0]}"] .item-input`);
+                if (input) input.focus();
+            }, 100);
+        }
+    }
+
+    function addNewItem() {
+        items.push({text: '', editing: true});
+        renderList();
+    }
+
+    function editItem(index) {
+        items[index].editing = true;
+        renderList();
+    }
+
+    function finishEditing(index) {
+        const input = document.querySelector(`[data-index="${index}"] .item-input`);
+        if (input) {
+            items[index].text = input.value;
+            items[index].editing = false;
+            renderList();
+        }
+    }
+
+    function handleKeyPress(event, index) {
+        if (event.key === 'Enter') {
+            finishEditing(index);
+        }
+    }
+
+    function deleteItem(index) {
+        const itemElement = document.querySelector(`[data-index="${index}"]`);
+        itemElement.classList.add('removing');
+
+        setTimeout(() => {
+            items.splice(index, 1);
+            renderList();
+        }, 300);
+    }
+
+    function startDrag(event, index) {
+        event.preventDefault();
+
+        const itemElement = document.querySelector(`[data-index="${index}"]`);
+        draggedElement = itemElement;
+        draggedIndex = index;
+
+        itemElement.style.cursor = 'grabbing';
+
+        function onMouseMove(e) {
+            if (!draggedElement) return;
+
+            draggedElement.classList.add('dragging');
+            draggedElement.style.position = 'fixed';
+            draggedElement.style.left = e.clientX - draggedElement.offsetWidth / 2 + 'px';
+            draggedElement.style.top = e.clientY - 20 + 'px';
+            draggedElement.style.zIndex = '1000';
+            draggedElement.style.pointerEvents = 'none';
+
+            // Find drop target
+            const elements = document.elementsFromPoint(e.clientX, e.clientY);
+            const targetItem = elements.find(el => el.classList.contains('list-item') && !el.classList.contains('dragging'));
+
+            // Remove previous drag-over class
+            document.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over'));
+
+            if (targetItem) {
+                targetItem.classList.add('drag-over');
+            }
+        }
+
+        function onMouseUp(e) {
+            document.removeEventListener('mousemove', onMouseMove);
+            document.removeEventListener('mouseup', onMouseUp);
+
+            if (!draggedElement) return;
+
+            const elements = document.elementsFromPoint(e.clientX, e.clientY);
+            const targetItem = elements.find(el => el.classList.contains('list-item') && !el.classList.contains('dragging'));
+
+            if (targetItem) {
+                const targetIndex = parseInt(targetItem.dataset.index);
+
+                if (targetIndex !== draggedIndex) {
+                    // Move item
+                    const draggedItem = items[draggedIndex];
+                    items.splice(draggedIndex, 1);
+                    items.splice(targetIndex, 0, draggedItem);
+                }
+            }
+
+            // Reset styles
+            draggedElement.style.position = '';
+            draggedElement.style.left = '';
+            draggedElement.style.top = '';
+            draggedElement.style.zIndex = '';
+            draggedElement.style.pointerEvents = '';
+            draggedElement.style.cursor = '';
+            draggedElement.classList.remove('dragging');
+
+            document.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over'));
+
+            draggedElement = null;
+            draggedIndex = -1;
+
+            renderList();
+        }
+
+        document.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('mouseup', onMouseUp);
+    }
+
+    // Initialize
+    renderList();
 </script>
 </body>
 </html>
