@@ -1,0 +1,163 @@
+.balance {
+    display: flex;
+    width: 100%;
+    gap: 28px;
+    margin-bottom: 60px;
+}
+
+.balance-block {
+    background-color: #F3F4F6;
+    border-radius: 12px;
+    padding: 24px;
+    flex: 1;
+}
+
+.balance-title {
+    font-weight: 500;
+    font-size: 18px;
+    color: #0F172A;
+    display: inline-block;
+}
+
+.balance-status {
+    display: inline-block;
+    float: right;
+    background-color: rgba(77, 180, 9, 0.15);
+    color: #4DB409;
+    border-radius: 4px;
+    padding: 3px 6px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.balance-price {
+    margin: 12px 0 0;
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+}
+
+.balance-price-current {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.balance-duration {
+    color: #757580;
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.balance-active {
+    margin: 12px 0 20px;
+}
+
+.action-button {
+    display: flex;
+    text-decoration: none;
+    color: white;
+    background-color: #0F172A;
+    padding: 14px 0;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+}
+
+.action-button:hover {
+    background-color: #3D4352;
+}
+
+.available-title {
+    color: #0F172A;
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.available-table {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 8px;
+    width: 100%;
+    margin: 16px 0 0;
+}
+
+.available-table-row {
+    display: flex;
+    padding: 16px;
+    justify-content: space-between;
+    width: 100%;
+    position: relative;
+}
+
+.available-table-row:not(:last-child):after {
+    content: "";
+    background: #F3F4F6;
+    position: absolute;
+    bottom: 0;
+    left: 16px;
+    width: calc(100% - 32px);
+    height: 1px;
+}
+
+.available-table-text {
+    font-size: 16px;
+    font-weight: 400;
+    color: rgba(117, 117, 128, 0.7);
+}
+
+.available-table-number {
+    color: #0F172A;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.possibilities {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.possibility {
+    font-weight: 400;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+}
+
+.possibility.available:before {
+    margin-right: 2px;
+    content: url("files/colored-check.svg");
+    width: 18px;
+    height: 18px;
+}
+
+.possibility.blocked:before {
+    margin-right: 2px;
+    content: url("files/colored-cross.svg");
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+}
+
+@media (max-width: 1080px) {
+    .balance {
+        flex-direction: column;
+        height: unset;
+    }
+}
+
+@Media (max-width: 768px) {
+    .action-button {
+        font-size: 14px;
+    }
+
+    .possibility.available:before {
+        margin-right: 7px;
+    }
+
+    .possibility.blocked:before {
+        margin-right: 7px;
+    }
+}

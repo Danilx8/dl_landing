@@ -32,6 +32,7 @@ button {
     position: absolute;
     top: 50px;
     left: 40px;
+    z-index: 12;
 }
 
 .steps-sidebar {
@@ -225,12 +226,14 @@ button {
     font-weight: bold;
 }
 
-.form-content {
+.content {
     flex: 1;
     padding: 40px;
     margin: 20px;
     border-radius: 12px;
     overflow-y: scroll;
+    overflow-x: hidden;
+    position: relative;
 }
 
 .input-container {
@@ -271,7 +274,7 @@ button {
     font-size: 24px;
 }
 
-.form-header {
+.header {
     display: flex;
     align-items: center;
     gap: 20px;
@@ -371,6 +374,7 @@ button {
     left: 30px;
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     gap: 15px;
 }
 
@@ -653,6 +657,10 @@ button {
     color: #333;
     text-align: center;
     flex: 1;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .section-label:nth-child(1) {
@@ -762,6 +770,10 @@ button {
         width: 100%;
     }
 
+    .content {
+        padding-bottom: 158px !important;
+    }
+
     .section-size {
         font-size: 12px;
     }
@@ -793,6 +805,10 @@ button {
         display: none;
     }
 
+    .social-links {
+        display: none;
+    }
+
     .main-content {
         margin-left: 0;
     }
@@ -805,12 +821,11 @@ button {
         display: block;
     }
 
-    .form-content {
-        margin: 10px;
+    .content {
         padding: 20px 20px 98px;
     }
 
-    .form-header {
+    .header {
         flex-wrap: wrap;
         justify-content: flex-start;
         font-size: 16px;
@@ -834,10 +849,6 @@ button {
     .nav-button {
         flex: 1;
         padding: 15px 20px;
-    }
-
-    .social-links {
-        display: none;
     }
 
     .mobile-menu-overlay {
@@ -867,7 +878,7 @@ button {
         border-radius: 8px;
         justify-content: flex-start;
         position: fixed;
-        bottom: 78px;
+        bottom: 85px;
         width: 100%;
     }
 
@@ -927,19 +938,21 @@ button {
             display: none;
         }
     }
+
+    .navigation-buttons {
+        border-radius: 16px 16px 0 0;
+        padding: 20px;
+        font-size: 14px;
+    }
 }
 
 @media (max-width: 480px) {
-    .form-content {
+    .content {
         margin: 5px;
         padding: 15px;
     }
 
     .mobile-steps-list {
         padding: 0 15px;
-    }
-
-    .navigation-buttons {
-        padding: 10px;
     }
 }

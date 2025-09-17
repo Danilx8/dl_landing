@@ -1,0 +1,242 @@
+.cabinet-content {
+    width: 100%;
+    height: auto;
+    padding: 40px;
+    margin: 20px;
+    border-radius: 12px;
+    overflow-y: scroll;
+    position: relative;
+    overflow-x: hidden;
+    /*container-name: content;*/
+    /*container-type: inline-size;*/
+}
+
+.cabinet-actions {
+    position: absolute;
+    bottom: 154px;
+    left: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 28px;
+    padding-bottom: 28px;
+    border-bottom: 2px solid #F3F4F6;
+}
+
+.cabinet-tabs {
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 28px;
+}
+
+.cabinet-tab {
+    color: #CACAD3;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-weight: 500;
+
+    path {
+        fill: #CACAD3;
+    }
+}
+
+.cabinet-title {
+    font-size: 20px;
+    color: #0F172A;
+    font-weight: 500;
+    margin: 0;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.active {
+    color: #0F172A;
+
+    path {
+        fill: #0F172A;
+    }
+}
+
+.mobile-menu {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    z-index: 10;
+    flex-direction: column;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.mobile-menu-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 11;
+    width: 18px;
+    height: 18px;
+    background-image: url('files/burger.svg');
+    border: none;
+    cursor: pointer;
+    display: none;
+}
+
+.mobile-menu-toggle.active {
+    background-image: url('files/cross.svg');
+}
+
+.login-banner {
+    background-color: white;
+    position: sticky;
+    margin-top: auto;
+    top: 100%;
+    bottom: 0;
+    display: flex;
+    flex-direction: row;
+    padding: 24px;
+    gap: 29px;
+    border: 4px solid #D3FAF8;
+    border-radius: 16px;
+    align-items: center;
+}
+
+.login-banner:hover {
+    background-color: #D3FAF8;
+}
+
+.login-banner-logo {
+    background: white;
+    padding: 8px;
+    border-radius: 12px;
+}
+
+.login-banner-text {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.login-banner-title {
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.login-banner-description {
+}
+
+.login-banner-link {
+    text-decoration: none;
+    color: #0F172A;
+    font-size: 16px;
+    font-weight: 600;
+    display: flex;
+    flex-direction: row;
+}
+
+.login-banner-icon {
+    width: 19px;
+    height: 18px;
+}
+
+/*@container style (--scroll:false) {*/
+/*    .login-banner {*/
+/*        top: calc(100% - 100vh);*/
+/*    }*/
+/*}*/
+
+@media (max-width: 1080px) {
+    .cabinet-content {
+        margin: 50px 10px 0;
+        padding: 24px 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .steps-sidebar {
+        display: none;
+    }
+
+    .mobile-menu-toggle {
+        display: block;
+    }
+
+    .mobile-menu.active {
+        display: flex;
+    }
+
+    .mobile-menu .cabinet-tabs,
+    .mobile-menu .cabinet-actions,
+    .mobile-menu .social-links {
+        width: 100%;
+        align-items: center;
+    }
+
+    .cabinet-tabs {
+        margin: 204px 0 40px;
+        gap: 40px;
+    }
+
+    .cabinet-tab {
+        color: #0F172A;
+
+        path {
+            fill: #0F172A
+        }
+    }
+
+    .social-links {
+        display: flex;
+        position: relative;
+        bottom: unset;
+        left: unset;
+        gap: 40px;
+    }
+
+    .cabinet-actions {
+        width: 238px;
+        bottom: 40px;
+        left: 0;
+        border: unset;
+    }
+
+    .cabinet-actions > .social-link {
+        border: 1px solid rgba(202, 202, 211, 1);
+        padding: 12px 0;
+        width: calc(100% - 40px);
+    }
+
+    .cabinet-actions > .social-link > img {
+        margin-right: 8px;
+    }
+
+    .login-banner {
+        padding: 16px;
+        border-radius: 8px;
+    }
+
+    .login-banner-title {
+        margin-left: 28px;
+        margin-right: 28px;
+    }
+
+    .login-banner-logo {
+        position: absolute;
+        width: 24px;
+        height: 24px;
+        padding: 0;
+        top: 16px;
+    }
+
+    .login-banner-link {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        font-size: 0;
+    }
+}
