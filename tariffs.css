@@ -340,7 +340,7 @@
         display: block;
         position: fixed;
         z-index: 11;
-        transform: translateX(-37vw);
+        transform: translateX(-33vw);
     }
 
     .mobile-table-container {
