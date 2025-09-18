@@ -138,70 +138,70 @@
                 <div>На 3 месяца</div>
                 <div><p>На год</p></div>
             </div>
-            <div class="mobile-row">
+            <div class="row">
                 <div>Содержание работы</div>
                 <div><img src="files/colored-check.svg"></div>
                 <div><img src="files/colored-check.svg"></div>
                 <div><img src="files/colored-check.svg"></div>
                 <div><img src="files/colored-check.svg"></div>
             </div>
-            <div class="mobile-row">
+            <div class="row">
                 <div>Цели и задачи</div>
                 <div><img src="files/colored-check.svg"></div>
                 <div><img src="files/colored-check.svg"></div>
                 <div><img src="files/colored-check.svg"></div>
                 <div><img src="files/colored-check.svg"></div>
             </div>
-            <div class="mobile-row">
+            <div class="row">
                 <div>Быстрый результат</div>
                 <div><img src="files/colored-check.svg"></div>
                 <div><img src="files/colored-check.svg"></div>
                 <div><img src="files/colored-check.svg"></div>
                 <div><img src="files/colored-check.svg"></div>
             </div>
-            <div class="mobile-row">
+            <div class="row">
                 <div>Список литературы</div>
                 <div><img src="files/colored-check.svg"></div>
                 <div><img src="files/colored-check.svg"></div>
                 <div><img src="files/colored-check.svg"></div>
                 <div><img src="files/colored-check.svg"></div>
             </div>
-            <div class="mobile-row">
+            <div class="row">
                 <div>Полная генерация работы</div>
                 <div>—</div>
                 <div><img src="files/colored-check.svg"></div>
                 <div><img src="files/colored-check.svg"></div>
                 <div><img src="files/colored-check.svg"></div>
             </div>
-            <div class="mobile-row">
+            <div class="row">
                 <div>Полных работ в месяц (до 25 стр)</div>
                 <div>—</div>
                 <div>3</div>
                 <div>3</div>
                 <div>3</div>
             </div>
-            <div class="mobile-row">
+            <div class="row">
                 <div>Решение задач</div>
                 <div>—</div>
                 <div><img src="files/colored-check.svg"></div>
                 <div><img src="files/colored-check.svg"></div>
                 <div><img src="files/colored-check.svg"></div>
             </div>
-            <div class="mobile-row">
+            <div class="row">
                 <div>Количество задач в месяц</div>
                 <div>—</div>
                 <div>30</div>
                 <div>30</div>
                 <div>30</div>
             </div>
-            <div class="mobile-row">
+            <div class="row">
                 <div>Профессиональное оформление</div>
                 <div>—</div>
                 <div><img src="files/colored-check.svg"></div>
                 <div><img src="files/colored-check.svg"></div>
                 <div><img src="files/colored-check.svg"></div>
             </div>
-            <div class="mobile-row">
+            <div class="row">
                 <div>Поддержка по любым вопросам</div>
                 <div>24/7</div>
                 <div>24/7</div>
@@ -246,7 +246,7 @@
                 </div>
 
                 <div class="scrollable-columns">
-                    <div class="columns-track" id="columnsTrack">
+                    <div class="columns-track" id="columnsTrack" style="transform: translateX(0%);">
                         <div class="column active">
                             <div class="header-cell"><p>Стартовый</p></div>
                             <div class="mobile-row">
@@ -445,7 +445,6 @@
                 </div>
             </div>
         </div>
-
         <div class="login-banner">
             <img src="files/big-telegram.svg" alt="Логотип телеграма" class="login-banner-logo">
             <div class="login-banner-text">
@@ -489,8 +488,6 @@
         columnsTrack.style.transform = `translateX(${translateX}%)`;
         columns.forEach(c => c.classList.remove('active'));
         columns[columnIndex].classList.add('active');
-        // const activeCell = columns[columnIndex].querySelector(".header-cell > p");
-        // activeCell.style.left = '120px;'
     }
 </script>
 </body>
