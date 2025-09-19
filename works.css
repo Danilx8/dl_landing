@@ -1,0 +1,166 @@
+.cabinet-content {
+    padding-bottom: 108px;
+}
+
+.cabinet-navigation {
+    position: absolute;
+    bottom: 0;
+    left: 240px;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    padding: 20px 60px 40px;
+    background-color: white;
+}
+
+.nav-button {
+    width: 280px;
+    height: 48px;
+    border: none;
+    border-radius: 16px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+}
+
+.nav-button.back {
+    background: white;
+    border: 1.5px #CACAD3 solid;
+}
+
+.nav-button.back:hover {
+    background: #e0e0e0;
+}
+
+.nav-button.next {
+    background: black;
+    color: white;
+}
+
+.nav-button.next:hover {
+    background-color: #3D4352;
+}
+
+.status {
+    padding: 7px 0 8px;
+    text-align: center;
+    border-radius: 6px;
+    width: 145px;
+}
+
+.status.progress {
+    background-color: #EFDFF7;
+    display: inline-block;
+
+    .status-text:before {
+        content: url("files/pencil.svg");
+        margin-right: 8px;
+        position: relative;
+        top: 3px;
+    }
+
+    .status-text:after {
+        content: "В работе";
+    }
+}
+
+.status.ready {
+    background-color: #D4FBE6;
+    display: inline-block;
+
+    .status-text:before {
+        content: url("files/check.svg");
+        margin-right: 8px;
+        position: relative;
+        top: 4px;
+    }
+
+    .status-text:after {
+        content: "Завершено";
+    }
+}
+
+.item-date {
+    width: 60px;
+}
+
+@media (max-width: 1080px) {
+    .cabinet-navigation {
+        padding: 20px 30px 40px;
+    }
+
+    .item-content {
+        flex-direction: column;
+        flex-wrap: wrap;
+        align-items: start;
+        position: relative;
+    }
+
+    .item-content:hover {
+        background-color: unset;
+    }
+
+    .item-title {
+        cursor: unset;
+        width: 100%;
+        margin-top: 45px;
+        position: static;
+    }
+
+    .item-title:after {
+        content: url("files/black-right-arrow.svg");
+        position: absolute;
+        bottom: 12px;
+        right: 16px;
+        cursor: pointer;
+    }
+
+    .item-title-text {
+        white-space: unset;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+    }
+
+    .item-date {
+        color: #757580;
+    }
+
+    .item-type {
+        display: none;
+    }
+
+    .status {
+        position: absolute;
+    }
+
+    .item-controls {
+        position: absolute;
+        align-self: end;
+    }
+}
+
+@media (max-width: 768px) {
+    .cabinet-navigation {
+        width: 100%;
+        height: 132px;
+        left: 0;
+        flex-flow: column;
+        padding: 20px 16px;
+        gap: 12px;
+        flex-wrap: wrap;
+        align-content: stretch;
+    }
+
+    .nav-button {
+        width: 100%;
+        height: 40px;
+        max-width: unset;
+        font-size: 14px;
+    }
+}

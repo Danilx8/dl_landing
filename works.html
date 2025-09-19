@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Личный кабинет</title>
+    <title>Мои работы</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="app.css">
     <link rel="stylesheet" href="cabinet.css">
-    <link rel="stylesheet" href="balance.css">
+    <link rel="stylesheet" href="works.css">
 </head>
 <body>
 <div class="container">
@@ -15,7 +15,7 @@
     <!-- Боковая панель с вкладками (десктоп) -->
     <div class="steps-sidebar">
         <div class="cabinet-tabs">
-            <a class="cabinet-tab active">
+            <a class="cabinet-tab">
                 <svg class="social-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
                      xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd"
@@ -34,7 +34,7 @@
                 </svg>
                 Тарифы
             </a>
-            <a class="cabinet-tab">
+            <a class="cabinet-tab active">
                 <svg class="social-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
                      xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd"
@@ -64,62 +64,17 @@
     <div class="cabinet-content">
         <div class="header">
             <div class="emoji-container">
-                ℹ️
+                📝
             </div>
-            <h1 class="title">Информация о текущем тарифе</h1>
+            <h1 class="title">Тут можно найти уже созданную работу или продолжить генерацию новой</h1>
         </div>
-
-        <div class="balance">
-            <div class="balance-block">
-                <h2 class="balance-title">Стартовый</h2>
-                <span class="balance-status">Активный</span>
-                <div class="balance-price">
-                    <div class="balance-price-current">0₽</div>
-                    <div class="balance-duration">/доступен всегда</div>
-                </div>
-                <div class="balance-active">Активен с 19.07.2025</div>
-                <a href="#" class="action-button">
-                    Получить все функции
-                    <img src="files/right-arrow.svg" alt="Все тарифы" class="nav-icon">
-                </a>
-            </div>
-
-            <div class="balance-block">
-                <h2 class="available-title">Доступно для генерации:</h2>
-                <div class="available-table">
-                    <div class="available-table-row">
-                        <div class="available-table-text">Текстовые работы</div>
-                        <div class="available-table-number">0</div>
-                    </div>
-                    <div class="available-table-row">
-                        <div class="available-table-text">Задачи</div>
-                        <div class="available-table-number">0</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="header">
-            <div class="emoji-container">
-                🛠️
-            </div>
-            <h1 class="title">Сейчас в твоём доступе</h1>
-        </div>
-        <div class="possibilities">
-            <div class="possibility available">Генерация и редактирование содержания работы, целей и задач, списка
-                литературы
-            </div>
-            <div class="possibility available">Результат за 5 минут</div>
-            <div class="possibility blocked">Нет полной генерации текстовых работ</div>
-            <div class="possibility blocked">Нет возможности решать задачи</div>
-        </div>
-
+        <div class="works" id="works"></div>
         <div class="login-banner">
             <img src="files/big-telegram.svg" alt="Логотип телеграма" class="login-banner-logo">
             <div class="login-banner-text">
                 <h3 class="login-banner-title">Авторизоваться через Telegram</h3>
-                <div class="login-banner-description">Создавай работы прямо в Telegram, получай удобные уведомления о
+                <div class="login-banner-description">Создавай работы прямо в Telegram, получай удобные уведомления
+                    о
                     статусе и мгновенный доступ ко всем функциям
                 </div>
             </div>
@@ -128,6 +83,15 @@
                 <img class="login-banner-icon" src="files/black-right-arrow.svg" alt="Переход в телеграм">
             </a>
         </div>
+    </div>
+    <div class="cabinet-navigation">
+        <button class="nav-button back">
+            Решить задачу
+        </button>
+        <button class="nav-button next">
+            Сгенерировать текст
+            <img src="files/stars.svg" alt="Сгенерировать текст" class="nav-icon">
+        </button>
     </div>
 
     <button class="mobile-menu-toggle"></button>
@@ -179,5 +143,239 @@
     </div>
 </div>
 <script src="cabinet.js" type="text/javascript"></script>
+<script>
+    let items = [
+        {
+            title: "Определите массу хлороводорода HCl, если этот газ занимает объем 4,48 л",
+            date: "26.08.2025",
+            type: "текст",
+            status: "progress"
+        },
+        {
+            title: "Вечные темы добра и зла в классической литературе",
+            date: "26.08.2025",
+            type: "задача",
+            status: "ready"
+        },
+        {
+            title: "Своеобразие поэтики романа",
+            date: "26.08.2025",
+            type: "задача",
+            status: "ready"
+        },
+        {
+            title: "Определите массу хлороводорода HCl, если этот газ занимает объем 4,48 л",
+            date: "26.08.2025",
+            type: "текст",
+            status: "progress"
+        },
+        {
+            title: "Вечные темы добра и зла в классической литературе",
+            date: "26.08.2025",
+            type: "задача",
+            status: "ready"
+        },
+        {
+            title: "Своеобразие поэтики романа",
+            date: "26.08.2025",
+            type: "задача",
+            status: "ready"
+        },
+        {
+            title: "Определите массу хлороводорода HCl, если этот газ занимает объем 4,48 л",
+            date: "26.08.2025",
+            type: "текст",
+            status: "progress"
+        },
+        {
+            title: "Вечные темы добра и зла в классической литературе",
+            date: "26.08.2025",
+            type: "задача",
+            status: "ready"
+        },
+        {
+            title: "Своеобразие поэтики романа",
+            date: "26.08.2025",
+            type: "задача",
+            status: "ready"
+        },
+        {
+            title: "Определите массу хлороводорода HCl, если этот газ занимает объем 4,48 л",
+            date: "26.08.2025",
+            type: "текст",
+            status: "progress"
+        },
+        {
+            title: "Вечные темы добра и зла в классической литературе",
+            date: "26.08.2025",
+            type: "задача",
+            status: "ready"
+        },
+        {
+            title: "Своеобразие поэтики романа",
+            date: "26.08.2025",
+            type: "задача",
+            status: "ready"
+        },
+        {
+            title: "Определите массу хлороводорода HCl, если этот газ занимает объем 4,48 л",
+            date: "26.08.2025",
+            type: "текст",
+            status: "progress"
+        },
+        {
+            title: "Вечные темы добра и зла в классической литературе",
+            date: "26.08.2025",
+            type: "задача",
+            status: "ready"
+        },
+        {
+            title: "Своеобразие поэтики романа",
+            date: "26.08.2025",
+            type: "задача",
+            status: "ready"
+        },
+        {
+            title: "Определите массу хлороводорода HCl, если этот газ занимает объем 4,48 л",
+            date: "26.08.2025",
+            type: "текст",
+            status: "progress"
+        },
+        {
+            title: "Вечные темы добра и зла в классической литературе",
+            date: "26.08.2025",
+            type: "задача",
+            status: "ready"
+        },
+        {
+            title: "Своеобразие поэтики романа",
+            date: "26.08.2025",
+            type: "задача",
+            status: "ready"
+        },
+
+    ];
+    let lastDeleted = null;
+    let lastDeletedIndex = null;
+
+    function renderList() {
+        const container = document.getElementById('works');
+        const itemList = items;
+
+        if (itemList.length === 0) {
+            container.innerHTML = '<div class="empty-state">Нет ранее созданных работ</div>';
+            return;
+        }
+
+        container.innerHTML = itemList.map((item, index) => {
+            return `
+                <div class="topic-item " data-index="${index}">
+                <div class="item-content">
+                    <div class="item-title"><span class="item-title-text">${item.title}</span>
+                    </div>
+                    <div class="item-date">${item.date}</div>
+                    <div class="item-type">${item.type}</div>
+                    <div class="status ${item.status}"><span class="status-text"></span></div>
+                    <div class="item-controls" style="display: flex">
+                        <button class="control-button delete-button"
+                                onclick="event.stopPropagation(); deleteItem(${index})"
+                                title="Удалить"></button>
+                        <button class="control-button download-button" title="Скачать"></button>
+                    </div>
+                </div>
+            </div>
+            `;
+        }).join('');
+
+        const editingItems = itemList.map((item, index) => item.editing ? index : -1).filter(i => i !== -1);
+        if (editingItems.length > 0) {
+            setTimeout(() => {
+                const input = container.querySelector(`[data-index="${editingItems[0]}"] .item-input`);
+                if (input) input.focus();
+            }, 100);
+        }
+
+        if (isTopics) {
+            itemList.forEach((item, index) => {
+                if (item.subItems) {
+                    const editingSubItems = item.subItems.map((subItem, subIndex) => subItem.editing ? subIndex : -1).filter(i => i !== -1);
+                    if (editingSubItems.length > 0) {
+                        setTimeout(() => {
+                            const input = container.querySelector(`[data-index="${index}"][data-sub-index="${editingSubItems[0]}"] .item-input`);
+                            if (input) input.focus();
+                        }, 100);
+                    }
+                }
+            });
+        }
+
+        if (lastDeleted) {
+            document.querySelectorAll('.popup').forEach(popup => popup.remove());
+            const popup = document.createElement('div');
+            popup.className = 'popup';
+            popup.innerHTML = `Элемент удалён, нажми тут для отмены`;
+            popup.onclick = () => undoDelete();
+            document.body.appendChild(popup);
+            setTimeout(() => {
+                popup.remove();
+                lastDeleted = null;
+                lastDeletedIndex = null;
+            }, 5000);
+        }
+
+        if (isSources && !isMobile()) {
+            document.querySelectorAll('.source-item').forEach(item => {
+                item.addEventListener('mouseenter', () => {
+                    const linkButton = item.querySelector('.link-button');
+                    if (linkButton) linkButton.style.display = 'flex';
+                });
+                item.addEventListener('mouseleave', () => {
+                    const linkButton = item.querySelector('.link-button');
+                    if (linkButton) linkButton.style.display = 'none';
+                });
+            });
+        }
+    }
+
+    function deleteItem(index) {
+        const selector = `[data-index="${index}"]`;
+        const itemElement = document.querySelector(selector);
+        itemElement.classList.add('removing');
+
+        lastDeleted = items[index];
+        lastDeletedIndex = {index};
+        setTimeout(() => {
+            items.splice(index, 1);
+        }, 300);
+
+        document.querySelectorAll('.cabinet-popup').forEach(popup => popup.remove());
+        const popup = document.createElement('div');
+        popup.className = 'cabinet-popup';
+        popup.innerHTML = `Элемент удалён, нажми тут для отмены`;
+        popup.onclick = () => undoDelete();
+        const content = document.querySelector('.cabinet-content');
+        content.insertAdjacentElement("beforeend", popup);
+        setTimeout(() => {
+            popup.remove();
+            lastDeleted = null;
+            lastDeletedIndex = null;
+        }, 5000);
+    }
+
+    function undoDelete() {
+        if (lastDeleted && lastDeletedIndex !== null) {
+            const {index, subIndex} = lastDeletedIndex;
+            if (subIndex !== undefined) {
+                items[index].subItems.splice(subIndex, 0, lastDeleted);
+            } else {
+                items.splice(index, 0, lastDeleted);
+            }
+            lastDeleted = null;
+            lastDeletedIndex = null;
+        }
+    }
+
+    renderList();
+</script>
 </body>
 </html>
