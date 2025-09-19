@@ -344,9 +344,7 @@
 
         lastDeleted = items[index];
         lastDeletedIndex = {index};
-        setTimeout(() => {
-            items.splice(index, 1);
-        }, 300);
+        items.splice(index, 1);
 
         document.querySelectorAll('.cabinet-popup').forEach(popup => popup.remove());
         const popup = document.createElement('div');
@@ -360,6 +358,7 @@
             lastDeleted = null;
             lastDeletedIndex = null;
         }, 5000);
+        renderList();
     }
 
     function undoDelete() {
@@ -373,6 +372,7 @@
             lastDeleted = null;
             lastDeletedIndex = null;
         }
+        renderList();
     }
 
     renderList();
